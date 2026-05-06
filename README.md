@@ -1,6 +1,8 @@
 # Processo Triage
 
-Aplicação para triagem de processos com interface gráfica, comparação contra a base Legal One, separação entre fluxos trabalhista e cível, categorização, priorização, geração de relatórios Excel, auditoria por execução e histórico comparativo entre rodadas.
+Processo Triage é uma aplicação de triagem de processos com interface gráfica, desenvolvida para consolidar bases externas, comparar registros com a base Legal One, separar fluxos com e sem match, classificar processos cíveis e trabalhistas, priorizar casos conforme regras de negócio e gerar relatórios Excel com auditoria por execução e histórico comparativo entre rodadas.
+
+O sistema foi estruturado para uso operacional, com foco em rastreabilidade, padronização do processamento, redução de intervenção manual e apoio à análise posterior, incluindo logs, resumo executivo, modo diagnóstico, histórico técnico e artefatos de auditoria. Além disso, o robô diferencia falhas técnicas reais de oscilações naturais nas bases recebidas, tornando a leitura dos resultados mais confiável e menos alarmista para o usuário final.
 
 ---
 
