@@ -139,19 +139,18 @@ _RAMOS_JUSTICA = {
     "9": "Justiça Militar Estadual",
 }
 
-_UF_POR_TRIBUNAL = {
-    # Justiça Federal (4)
-    "01": "DF", "02": "RJ/ES", "03": "SP/MS", "04": "RS/SC/PR", "05": "PE/CE/AL/SE/PB/RN",
-    "06": "MG",
-    # Justiça do Trabalho (5)
-    # 01-24 por região
-    # Justiça Estadual (8)
+_UF_POR_TRIBUNAL_ESTADUAL = {
     "01": "AC", "02": "AL", "03": "AP", "04": "AM", "05": "BA",
     "06": "CE", "07": "DF", "08": "ES", "09": "GO", "10": "MA",
     "11": "MT", "12": "MS", "13": "MG", "14": "PA", "15": "PB",
     "16": "PE", "17": "PI", "18": "PR", "19": "RJ", "20": "RN",
     "21": "RS", "22": "RO", "23": "RR", "24": "SC", "25": "SE",
     "26": "SP", "27": "TO",
+}
+
+_UF_POR_TRIBUNAL_FEDERAL = {
+    "01": "DF", "02": "RJ/ES", "03": "SP/MS", "04": "RS/SC/PR",
+    "05": "PE/CE/AL/SE/PB/RN", "06": "MG",
 }
 
 _CNJ_PARSE_RE = re.compile(
@@ -176,11 +175,11 @@ def _parse_cnj(cnj: str) -> dict[str, str]:
     # UF depende do ramo
     uf = "N/A"
     if justica == "8":  # Estadual
-        uf = _UF_POR_TRIBUNAL.get(tribunal, f"UF? ({tribunal})")
+        uf = _UF_POR_TRIBUNAL_ESTADUAL.get(tribunal, f"UF? ({tribunal})")
     elif justica == "5":  # Trabalho
         uf = f"TRT-{tribunal}"
     elif justica == "4":  # Federal
-        uf = _UF_POR_TRIBUNAL.get(tribunal, f"TRF-{tribunal}")
+        uf = _UF_POR_TRIBUNAL_FEDERAL.get(tribunal, f"TRF-{tribunal}")
 
     return {
         "ano_processo": ano,

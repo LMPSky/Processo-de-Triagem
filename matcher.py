@@ -16,19 +16,8 @@ from filters import (
     add_cnj_validation,
     add_age_flag,
 )
-from categorizer import classify_text
+from categorizer import classify_text, _truncate_text_column
 
-
-_MAX_TEXT_LENGTH = 500
-
-def _truncate_text_column(df: pd.DataFrame) -> pd.DataFrame:
-    """Trunca a coluna _texto para caber no Excel."""
-    df = df.copy()
-    if "_texto" in df.columns:
-        df["_texto"] = df["_texto"].apply(
-            lambda x: (x[:_MAX_TEXT_LENGTH] + "... [TRUNCADO]") if isinstance(x, str) and len(x) > _MAX_TEXT_LENGTH else x
-        )
-    return df
 
 def _safe_filename(name: str) -> str:
     """Converte nome da categoria em nome de arquivo seguro."""
@@ -253,7 +242,7 @@ def run_matching(config: AppConfig) -> None:
         )
 
     # --- PROCESSOS ANTIGOS ---
-    old_processes = matched[matched["processo_antigo"] == True]
+    old_processes = matched[matched["processo_antigo"]]
     old_path = out / f"processos_antigos_{timestamp}.xlsx"
     if len(old_processes) > 0:
         _truncate_text_column(
