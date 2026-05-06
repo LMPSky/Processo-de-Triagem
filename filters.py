@@ -248,21 +248,8 @@ def _validate_cnj_check_digit(cnj: str) -> bool:
     numero, digito, ano, justica, tribunal, origem = m.groups()
 
     try:
-        n = int(numero)
-        d = int(digito)
-        a = int(ano)
-        j = int(justica)
-        t = int(tribunal)
-        o = int(origem)
-
-        # Cálculo conforme Resolução 65 do CNJ
-        remainder = (n % 97) * (10**14 % 97) % 97
-        remainder = (remainder + a * (10**10 % 97) % 97 + j * (10**9 % 97) % 97) % 97
-        remainder = (remainder + t * (10**7 % 97) % 97 + o * (10**3 % 97) % 97 + d) % 97
-
-        # Método alternativo mais simples e confiável
-        # Monta o número completo sem o dígito: NNNNNNNAAAAJTTOOOO
-        # e verifica se NNNNNNNAAAAJTTOOOODD mod 97 == 1
+        # Resolução 65 do CNJ: concatena NNNNNNN + AAAA + J + TT + OOOO + DD
+        # e verifica se o número inteiro resultante tem resto 1 na divisão por 97.
         full_number = f"{numero}{ano}{justica}{tribunal}{origem}{digito}"
         return int(full_number) % 97 == 1
 
