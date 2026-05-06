@@ -1,0 +1,1048 @@
+[UI] Iniciando processamento...
+[UI] 📂 Diretório raiz: C:\Users\lucas.paim\Desktop\processo_triage
+[UI] 📂 Entrada: C:\Users\lucas.paim\Desktop\processo_triage\input
+[UI] 📂 Saída raiz: C:\Users\lucas.paim\Desktop\processo_triage\output
+[UI] 📂 Saída da execução atual: C:\Users\lucas.paim\Desktop\processo_triage\output\runs\20260505_142851
+[UI] 📂 Pasta latest: C:\Users\lucas.paim\Desktop\processo_triage\output\latest
+[UI] 📝 Log desta execução: C:\Users\lucas.paim\Desktop\processo_triage\logs_ui\ui_run_20260505_142851.log
+[UI] 🧾 Pasta de auditoria desta execução: C:\Users\lucas.paim\Desktop\processo_triage\output\runs\20260505_142851\_auditoria
+[INPUT] Limpando arquivos internos de execuções anteriores...
+[INPUT] Não é necessário limpar manualmente a pasta input/ antes de rodar.
+[INPUT] Removendo arquivo interno anterior: Base LO.xlsx
+[INPUT] Removendo arquivo interno anterior: Webjur1.csv
+[INPUT] Removendo derivado anterior: Webjur1_SANITIZADO.csv
+[INPUT] Removendo derivado anterior: Webjur1_SANITIZADO_RUINS.csv
+[INPUT] Removendo arquivo interno anterior: DW1.xlsx
+[INPUT] Removendo arquivo interno anterior: Painel1.xlsx
+[OUTPUT] Limpando somente a área operacional do output...
+[OUTPUT] Pastas preservadas: runs/, latest/, _historico_execucoes/
+[OUTPUT] Removendo diretório operacional anterior: Civel
+[OUTPUT] Removendo arquivo operacional anterior: com_match_descartados_20260505_142406.xlsx
+[OUTPUT] Removendo arquivo operacional anterior: resumo_20260505_142406.xlsx
+[OUTPUT] Removendo diretório operacional anterior: Trabalhista
+[INPUT] Copiando arquivos selecionados para a pasta de processamento...
+[INPUT] Preparando fonte 'Base Legal One' com 1 arquivo(s)...
+[INPUT] Copiando 'BASE BATIMENTO LIXO (20).xlsx' para 'Base LO.xlsx'...
+[INPUT] ✓ Base Legal One: BASE BATIMENTO LIXO (20).xlsx -> Base LO.xlsx
+[INPUT] Preparando fonte 'WebJur' com 1 arquivo(s)...
+[INPUT] Copiando '202604~1.CSV' para 'Webjur1.csv'...
+[INPUT] ✓ WebJur: 202604~1.CSV -> Webjur1.csv
+[WEBJUR] Sanitizando arquivo com sanitizador validado: Webjur1.csv
+[WEBJUR] Coluna 'Codigo': 0 de 8842 parecem ser data
+[WEBJUR] Coluna 'Número do Processo': 36 de 8842 parecem ser data
+[WEBJUR] Coluna 'Data da Publicação': 8348 de 8842 parecem ser data
+[WEBJUR] Coluna 'Termo Localizado': 0 de 8842 parecem ser data
+[WEBJUR] Coluna 'Diário Oficial': 0 de 8842 parecem ser data
+[WEBJUR] Coluna 'Página': 2586 de 8842 parecem ser data
+[WEBJUR] Coluna 'Juizo': 0 de 8842 parecem ser data
+[WEBJUR] Coluna 'Publicação': 0 de 8842 parecem ser data
+[WEBJUR] Coluna 'targetID': 0 de 8842 parecem ser data
+[WEBJUR] 🟢 Coluna real de data: posição 3 ('Data da Publicação')
+[WEBJUR] Sanitizado: 8348 linhas válidas | 494 linhas removidas por data inválida
+[WEBJUR] ✓ Bruto preservado em: Webjur1.csv
+[WEBJUR] ✓ Sanitizado gerado em: Webjur1_SANITIZADO.csv
+[WEBJUR] ✓ Pipeline deverá consumir o sanitizado, não o bruto.
+[WEBJUR] ⚠️ Linhas inválidas salvas em: Webjur1_SANITIZADO_RUINS.csv
+[INPUT] Preparando fonte 'DW' com 1 arquivo(s)...
+[INPUT] Copiando 'DW.xlsx' para 'DW1.xlsx'...
+[INPUT] ✓ DW: DW.xlsx -> DW1.xlsx
+[INPUT] Preparando fonte 'Painel' com 1 arquivo(s)...
+[INPUT] Copiando 'Planilha Leitura Painel DFA 30% - DIARIA  29.04.2026  e  30.04.2026.xlsx' para 'Painel1.xlsx'...
+[INPUT] ✓ Painel: Planilha Leitura Painel DFA 30% - DIARIA  29.04.2026  e  30.04.2026.xlsx -> Painel1.xlsx
+[INPUT] ℹ️ Fonte não informada nesta execução: Modo LegalOne de Intimações
+[INPUT] Arquivos atualmente em input/:
+[INPUT]   • Base LO.xlsx
+[INPUT]   • DW1.xlsx
+[INPUT]   • Painel1.xlsx
+[INPUT]   • Webjur1.csv
+[INPUT]   • Webjur1_SANITIZADO.csv
+[INPUT]   • Webjur1_SANITIZADO_RUINS.csv
+[PIPELINE] Iniciando robô de classificação...
+[PIPELINE] Executando comando: C:\Users\lucas.paim\AppData\Local\Python\pythoncore-3.14-64\pythonw.exe -X utf8 main.py
+[PIPELINE] Return code: 0
+[PIPELINE] === STDOUT ===
+╔══════════════════════════════════════════════════╗
+║       TRIAGEM DE PROCESSOS — Legal One           ║
+╚══════════════════════════════════════════════════╝
+⚠️  VALIDAÇÃO DE ENTRADA:
+   [Painel] Arquivos não encontrados: Painel2.xlsx
+   [DW] Arquivos não encontrados: DW2.xlsx
+   [WebJur] Arquivos não encontrados: Webjur2.csv
+   [Modo LegalOne de Intimações] Arquivos não encontrados: ModoLegalOneIntimacoes1.xlsx, ModoLegalOneIntimacoes2.xlsx
+   ℹ️  Arquivos ausentes serão ignorados quando possível. Continuando...
+════════════════════════════════════════════════════════════
+📂 Lendo fonte: LEGAL ONE
+Headers lidos no arquivo Base LO.xlsx: ['Pasta', 'Número de CNJ', 'Outro número', 'Número antigo', 'Datacloud diários oficiais / Diário']
+   → 149737 linhas no Legal One
+   → 269555 identificadores únicos no pool de comparação
+════════════════════════════════════════════════════════════
+Headers lidos no arquivo Painel1.xlsx: ['TRIBUNAL', 'DATA INTIMAÇÃO', 'INICIO DE PRAZO', 'DATA ACESSO PAINEL', 'CLASSE JUDICIAL', 'PROCESSO', 'CLIENTE', 'EMAIL', 'Unnamed: 8', 'Unnamed: 9', 'Unnamed: 10']
+Headers lidos no arquivo DW1.xlsx: ['Status', 'Advogado', 'Tipo', 'Sistema', 'Processo', 'Disponibilização', 'Data da leitura', 'Prazo', 'Última Pesquisa', '1ª Pesquisa', 'Limite da Leitura', 'Captura da intimação', 'Data para leitura', 'Tip. Intim.', 'Intimado', 'Intimação', 'Partes', 'Juízo', 'Vara', 'Blacklist', 'Link', 'Intimacao deflagrada', 'Intimação ID', 'Texto da Intimação']
+Headers lidos no arquivo Webjur1.csv: ['Codigo', 'Número do Processo', 'Data da Publicação', 'Termo Localizado', 'Diário Oficial', 'Página', 'Juizo', 'Publicação', 'targetID']
+   → 8587 linhas totais nas bases externas
+════════════════════════════════════════════════════════════
+📋 Classificando tipos de número...
+   📊 Classificação dos números:
+      • cnj: 8270
+      • numero_puro: 284
+      • outro: 20
+      • sem_expediente: 10
+      • stj: 3
+════════════════════════════════════════════════════════════
+📋 Analisando presença em múltiplas fontes...
+   📊 Presença em múltiplas fontes:
+      • Em mais de 1 fonte: 134 processos
+      • Em apenas 1 fonte:  6451 processos
+════════════════════════════════════════════════════════════
+📋 Removendo duplicatas...
+   🔄 Duplicatas removidas: 2002 linhas
+   ✅ Restaram: 6585 linhas únicas
+════════════════════════════════════════════════════════════
+📋 Extraindo detalhes dos CNJs (UF, Ramo, Ano)...
+   📊 Ramo da Justiça (CNJs):
+      • Justiça Estadual: 4915
+      • Justiça do Trabalho: 893
+      • Justiça Federal: 494
+      • STJ: 10
+      • Justiça Eleitoral: 5
+      • CNJ: 4
+      • Justiça Militar da União: 1
+   📊 UF (CNJs):
+      • RJ: 1565
+      • CE: 1329
+      • AM: 536
+      • PE: 280
+      • MG: 272
+      • DF: 256
+      • TRT-03: 239
+      • SP: 205
+      • TRT-02: 199
+      • TRT-01: 154
+      • RN: 124
+      • RJ/ES: 100
+      • TRT-15: 96
+      • SP/MS: 92
+      • SC: 89
+      ... e mais 41 UFs
+════════════════════════════════════════════════════════════
+📋 Validando dígito verificador dos CNJs...
+   📊 Validação de dígito verificador (CNJs):
+      • Válidos:   6322
+      • Inválidos: 0
+════════════════════════════════════════════════════════════
+📋 Verificando idade dos processos...
+   📊 Idade dos processos (CNJs, corte: 2015):
+      • Antigos (antes de 2015): 233
+      • Recentes (2015+):        6089
+      Distribuição dos antigos:
+        • 1993: 1
+        • 1996: 1
+        • 1997: 1
+        • 1998: 2
+        • 1999: 2
+        • 2000: 11
+        • 2002: 3
+        • 2003: 4
+        • 2004: 3
+        • 2005: 9
+        • 2006: 14
+        • 2007: 9
+        • 2008: 16
+        • 2009: 16
+        • 2010: 29
+        • 2011: 17
+        • 2012: 30
+        • 2013: 31
+        • 2014: 34
+════════════════════════════════════════════════════════════
+🔍 Comparando com Legal One...
+   ➡️ SEM MATCH total:  5879
+   ➡️ COM MATCH (descartados): 706
+   ➡️ Trabalhista SEM MATCH: 791
+   ➡️ Cível SEM MATCH:      5088
+✅ Exportado BRUTO (sem filtro): sem_match_trab_bruto_20260505_143018.xlsx
+Categorias atribuídas (value_counts) - Trabalhista:
+_categoria
+Ação Trabalhista          333
+Ação de Cumprimento       205
+Recurso Ordinário         116
+Agravo de Instrumento      63
+Embargos de Declaração     36
+Recurso Extraordinário     13
+Agravo de Petição          12
+Recurso de Revista          6
+NaN                         3
+Décio Freire                3
+Mandado de Segurança        1
+Name: count, dtype: int64
+Exemplos de textos trabalhistas não classificados:
+                                            _texto
+4120                     PODER JUDICIÁRIO DA UNIÃO
+4124                     PODER JUDICIÁRIO DA UNIÃO
+1112  EDITAL DE HASTA PÚBLICA UNIFICADA Nº 02.2026
+   📁 Arquivos TRABALHISTA por categoria:
+      • agravo_de_instrumento_20260505_143018.xlsx  (63 linhas)
+      • agravo_de_peticao_20260505_143018.xlsx  (12 linhas)
+      • acao_trabalhista_20260505_143018.xlsx  (333 linhas)
+      • acao_de_cumprimento_20260505_143018.xlsx  (205 linhas)
+      • embargos_de_declaracao_20260505_143018.xlsx  (36 linhas)
+      • mandado_de_seguranca_20260505_143018.xlsx  (1 linhas)
+      • recurso_extraordinario_20260505_143018.xlsx  (13 linhas)
+      • recurso_ordinario_20260505_143018.xlsx  (116 linhas)
+      • recurso_de_revista_20260505_143018.xlsx  (6 linhas)
+Categorias atribuídas (value_counts) - Cível:
+_categoria_civel
+NaN                                          1562
+Recurso Inominado                             573
+IAC                                           558
+EXCLUIDO                                      439
+Cumprimento de Sentença                       390
+Recursos                                      320
+Agravo de Instrumento                         313
+Agravo Interno                                148
+Embargos de Declaração                        147
+Impedimento/Suspeição do Juiz                 133
+Tutela Provisória                              81
+Assistência                                    75
+Mandado de Segurança Cível                     55
+Embargos à Execução                            45
+Recurso Especial                               43
+Agravo Regimental                              34
+Carta Precatória Cível                         33
+Incidente de Arbitramento                      29
+Recurso Extraordinário                         25
+Liquidação de Sentença                         16
+Embargos                                       11
+Oposição                                       11
+Coisa Julgada                                   9
+Incompetência Relativa                          6
+Desconsideração da Personalidade Jurídica       5
+IRDR                                            5
+Conflito de Competência                         4
+Recurso Adesivo                                 4
+Litispendência                                  4
+Tutela Cautelar Antecedente                     2
+RPV                                             2
+Impugnação ao Valor da Causa                    2
+Falsidade Documental                            1
+Exibição de Documento ou Coisa                  1
+Pré-executividade                               1
+Produção Antecipada de Provas                   1
+Name: count, dtype: int64
+Prioridade cível (value_counts):
+_prioridade_civel
+PRIORIDADE    4354
+               734
+Name: count, dtype: int64
+Confiança cível (histograma simples):
+_confidence_civel
+0       187
+5        22
+8       981
+11        3
+16      369
+75       14
+81        1
+83        1
+86      228
+91       87
+95       59
+99      439
+100    2697
+Name: count, dtype: int64
+Arquivo cível exportado: C:\Users\lucas.paim\Desktop\processo_triage\output\Civel\sem_match_civel_20260505_143018.xlsx
+   📁 Arquivos CÍVEL por categoria:
+      • agravo_interno_20260505_143018.xlsx  (148 linhas)
+      • agravo_regimental_20260505_143018.xlsx  (34 linhas)
+      • agravo_de_instrumento_20260505_143018.xlsx  (313 linhas)
+      • assistência_20260505_143018.xlsx  (75 linhas)
+      • carta_precatoria_civel_20260505_143018.xlsx  (33 linhas)
+      • coisa_julgada_20260505_143018.xlsx  (9 linhas)
+      • conflito_de_competência_20260505_143018.xlsx  (4 linhas)
+      • cumprimento_de_sentenca_20260505_143018.xlsx  (390 linhas)
+      • desconsideracao_da_personalidade_juridica_20260505_143018.xlsx  (5 linhas)
+      • excluido_20260505_143018.xlsx  (439 linhas)
+      • embargos_20260505_143018.xlsx  (11 linhas)
+      • embargos_de_declaracao_20260505_143018.xlsx  (147 linhas)
+      • embargos_à_execucao_20260505_143018.xlsx  (45 linhas)
+      • exibicao_de_documento_ou_coisa_20260505_143018.xlsx  (1 linhas)
+      • falsidade_documental_20260505_143018.xlsx  (1 linhas)
+      • iac_20260505_143018.xlsx  (558 linhas)
+      • irdr_20260505_143018.xlsx  (5 linhas)
+      • impedimentosuspeicao_do_juiz_20260505_143018.xlsx  (133 linhas)
+      • impugnacao_ao_valor_da_causa_20260505_143018.xlsx  (2 linhas)
+      • incidente_de_arbitramento_20260505_143018.xlsx  (29 linhas)
+      • incompetência_relativa_20260505_143018.xlsx  (6 linhas)
+      • liquidacao_de_sentenca_20260505_143018.xlsx  (16 linhas)
+      • litispendência_20260505_143018.xlsx  (4 linhas)
+      • mandado_de_seguranca_civel_20260505_143018.xlsx  (55 linhas)
+      • oposicao_20260505_143018.xlsx  (11 linhas)
+      • producao_antecipada_de_provas_20260505_143018.xlsx  (1 linhas)
+      • pre_executividade_20260505_143018.xlsx  (1 linhas)
+      • rpv_20260505_143018.xlsx  (2 linhas)
+      • recurso_adesivo_20260505_143018.xlsx  (4 linhas)
+      • recurso_especial_20260505_143018.xlsx  (43 linhas)
+      • recurso_extraordinario_20260505_143018.xlsx  (25 linhas)
+      • recurso_inominado_20260505_143018.xlsx  (573 linhas)
+      • recursos_20260505_143018.xlsx  (320 linhas)
+      • tutela_cautelar_antecedente_20260505_143018.xlsx  (2 linhas)
+      • tutela_provisoria_20260505_143018.xlsx  (81 linhas)
+════════════════════════════════════════════════════════════
+📁 Arquivos gerados em: C:\Users\lucas.paim\Desktop\processo_triage\output
+   • Prioridade (Décio Trabal): sem_match_trab_prioridade_20260505_143018.xlsx
+   • Categorias TRABALHISTA -> C:\Users\lucas.paim\Desktop\processo_triage\output\Trabalhista\sem_match_trab_categorias
+   • Todos classificados TRABALHISTA -> sem_match_trab_todos_classificados_20260505_143018.xlsx
+   • Sem categoria TRABALHISTA: sem_match_trab_sem_categoria_20260505_143018.xlsx
+   • CÍVEL exportado: sem_match_civel_20260505_143018.xlsx
+   • Categorias CÍVEL -> C:\Users\lucas.paim\Desktop\processo_triage\output\Civel\sem_match_civel_categorias
+   • Prioridade CÍVEL -> C:\Users\lucas.paim\Desktop\processo_triage\output\Civel\prioridade\sem_match_civel_prioridade_20260505_143018.xlsx
+   • Sem categoria CÍVEL: sem_match_civel_sem_categoria_20260505_143018.xlsx
+   • COM MATCH descartados: com_match_descartados_20260505_143018.xlsx
+════════════════════════════════════════════════════════════
+[PIPELINE] === STDERR ===
+[2026-05-05 14:30:18] [INFO] matcher — 🚀 INICIANDO PROCESSO DE TRIAGEM
+[2026-05-05 14:30:18] [INFO] reader — Lendo: C:\Users\lucas.paim\Desktop\processo_triage\input\Base LO.xlsx
+[2026-05-05 14:30:18] [INFO] reader — Arquivo efetivamente lido para 'Base LO.xlsx': Base LO.xlsx
+[2026-05-05 14:30:28] [INFO] reader — Colunas lidas do arquivo 'Base LO.xlsx': ['lucaspaim@deciofreire.com.br - 04/05/2026', 'Unnamed: 1', 'Unnamed: 2', 'Unnamed: 3', 'Unnamed: 4']
+[2026-05-05 14:30:28] [INFO] reader — Primeiras 3 linhas de 'Base LO.xlsx':
+  lucaspaim@deciofreire.com.br - 04/05/2026                 Unnamed: 1    Unnamed: 2     Unnamed: 3                                            Unnamed: 4
+0                                     Pasta              Número de CNJ  Outro número  Número antigo                   Datacloud diários oficiais / Diário
+1                        Proc - 0050859/001  0010903-71.2018.5.03.0029           NaN            NaN  Diário do Tribunal Regional do Trabalho da 3ª Região
+2                        Proc - 0001809/001  0010815-45.2018.5.03.0025           NaN            NaN                                                   NaN
+[2026-05-05 14:30:36] [INFO] reader — Colunas lidas do arquivo 'Base LO.xlsx': ['Pasta', 'Número de CNJ', 'Outro número', 'Número antigo', 'Datacloud diários oficiais / Diário']
+[2026-05-05 14:30:36] [INFO] reader — Primeiras 3 linhas de 'Base LO.xlsx':
+                Pasta              Número de CNJ Outro número Número antigo                   Datacloud diários oficiais / Diário
+0  Proc - 0050859/001  0010903-71.2018.5.03.0029          NaN           NaN  Diário do Tribunal Regional do Trabalho da 3ª Região
+1  Proc - 0001809/001  0010815-45.2018.5.03.0025          NaN           NaN                                                   NaN
+2  Proc - 0017762/001  6549225-03.2009.8.13.0024          NaN           NaN           Diário da Justiça do Estado de Minas Gerais
+[2026-05-05 14:30:36] [INFO] reader — Pulou 1 linha(s) de cabeçalho extra
+[2026-05-05 14:30:36] [INFO] reader — Coluna CNJ mapeada: 'Número de CNJ'
+[2026-05-05 14:30:36] [INFO] reader — Base LO.xlsx: total de linhas lidas=149737 | CNJ preenchido=139573 | CNJ vazio=10164
+[2026-05-05 14:30:36] [WARNING] reader — Base LO.xlsx: exemplos de linhas com CNJ vazio: [{'Pasta': 'Proc - 0018146/001', 'Número de CNJ': '', 'Outro número': '1028305', 'Número antigo': '2008/0025130-1', 'Datacloud diários oficiais / Diário': 'Diário da Justiça do STJ'}, {'Pasta': 'Proc - 0002924', 'Número de CNJ': '', 'Outro número': '', 'Número antigo': '00118996520155030032', 'Datacloud diários oficiais / Diário': ''}, {'Pasta': 'Proc - 0002925', 'Número de CNJ': '', 'Outro número': '', 'Número antigo': '00126626020135010204', 'Datacloud diários oficiais / Diário': ''}, {'Pasta': 'Proc - 0002929', 'Número de CNJ': '', 'Outro número': '', 'Número antigo': '00260607220155240072', 'Datacloud diários oficiais / Diário': ''}, {'Pasta': 'Proc - 0002933', 'Número de CNJ': '', 'Outro número': '', 'Número antigo': '10000916220145020241', 'Datacloud diários oficiais / Diário': ''}]
+[2026-05-05 14:30:36] [INFO] reader — Colunas mapeadas: CNJ='Número de CNJ', DataPublicacao='None', Texto='None', Cliente='None', Tribunal/Sistema extraídos por fonte
+[2026-05-05 14:30:36] [INFO] matcher — Legal One: 149737 linhas lidas
+[2026-05-05 14:30:51] [INFO] matcher — Legal One: 269555 identificadores no pool
+[2026-05-05 14:30:51] [INFO] reader — 📂 Lendo fonte: PAINEL
+[2026-05-05 14:30:51] [INFO] reader — Lendo: C:\Users\lucas.paim\Desktop\processo_triage\input\Painel1.xlsx
+[2026-05-05 14:30:51] [INFO] reader — Arquivo efetivamente lido para 'Painel1.xlsx': Painel1.xlsx
+[2026-05-05 14:30:51] [INFO] reader — Colunas lidas do arquivo 'Painel1.xlsx': ['TRIBUNAL', 'DATA INTIMAÇÃO', 'INICIO DE PRAZO', 'DATA ACESSO PAINEL', 'CLASSE JUDICIAL', 'PROCESSO', 'CLIENTE', 'EMAIL', 'Unnamed: 8', 'Unnamed: 9', 'Unnamed: 10']
+[2026-05-05 14:30:51] [INFO] reader — Primeiras 3 linhas de 'Painel1.xlsx':
+  TRIBUNAL       DATA INTIMAÇÃO INICIO DE PRAZO   DATA ACESSO PAINEL CLASSE JUDICIAL                                                                                             PROCESSO                                CLIENTE EMAIL Unnamed: 8 Unnamed: 9 Unnamed: 10
+0      STJ  2026-05-03 00:00:00   Não Informado  2026-04-30 00:00:00   Não Informado  EDcl no AgInt no RE nos EDcl no AgInt no AGRAVO EM RECURSO ESPECIAL Nº 2735263 - DF(2024/0328455-6)  AMAZONAS DISTRIBUIDORA DE ENERGIA S/A   NaN        NaN        NaN         NaN
+1      STJ  2026-05-03 00:00:00   Não Informado  2026-04-30 00:00:00   Não Informado                AgInt no RE no AgInt no RECURSO EM MANDADO DE SEGURANÇA Nº 73075 - SC(2024/0063089-6)                FUNDAÇÃO GETÚLIO VARGAS   NaN        NaN        NaN         NaN
+2      STJ  2026-05-03 00:00:00   Não Informado  2026-04-30 00:00:00   Não Informado                                    PET no AGRAVO EM RECURSO ESPECIAL Nº 3181145 - MG(2026/0060246-9)        FURNAS - CENTRAIS ELETRICAS S.A   NaN        NaN        NaN         NaN
+[2026-05-05 14:30:51] [INFO] reader — Coluna CNJ mapeada: 'PROCESSO'
+[2026-05-05 14:30:51] [INFO] reader — Painel1.xlsx: total de linhas lidas=56 | CNJ preenchido=56 | CNJ vazio=0
+C:\Users\lucas.paim\Desktop\processo_triage\reader.py:85: UserWarning: Parsing dates in %Y-%m-%d %H:%M:%S format when dayfirst=True was specified. Pass `dayfirst=False` or specify a format to silence this warning.
+  pd_timestamp = pd.to_datetime(val, errors="coerce", dayfirst=True)
+[2026-05-05 14:30:51] [INFO] reader — Colunas mapeadas: CNJ='PROCESSO', DataPublicacao='DATA INTIMAÇÃO', Texto='CLASSE JUDICIAL', Cliente='CLIENTE', Tribunal/Sistema extraídos por fonte
+[2026-05-05 14:30:51] [WARNING] reader — Arquivo não encontrado, pulando: C:\Users\lucas.paim\Desktop\processo_triage\input\Painel2.xlsx
+[2026-05-05 14:30:51] [INFO] reader — 📂 Lendo fonte: DW
+[2026-05-05 14:30:51] [INFO] reader — Lendo: C:\Users\lucas.paim\Desktop\processo_triage\input\DW1.xlsx
+[2026-05-05 14:30:51] [INFO] reader — Arquivo efetivamente lido para 'DW1.xlsx': DW1.xlsx
+C:\Users\lucas.paim\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openpyxl\styles\stylesheet.py:237: UserWarning: Workbook contains no default style, apply openpyxl's default
+  warn("Workbook contains no default style, apply openpyxl's default")
+[2026-05-05 14:30:51] [INFO] reader — Colunas lidas do arquivo 'DW1.xlsx': ['Status', 'Advogado', 'Tipo', 'Sistema', 'Processo', 'Disponibilização', 'Data da leitura', 'Prazo', 'Última Pesquisa', '1ª Pesquisa', 'Limite da Leitura', 'Captura da intimação', 'Data para leitura', 'Tip. Intim.', 'Intimado', 'Intimação', 'Partes', 'Juízo', 'Vara', 'Blacklist', 'Link', 'Intimacao deflagrada', 'Intimação ID', 'Texto da Intimação']
+[2026-05-05 14:30:51] [INFO] reader — Primeiras 3 linhas de 'DW1.xlsx':
+                       Status                              Advogado      Tipo                    Sistema                   Processo     Disponibilização      Data da leitura             Prazo      Última Pesquisa          1ª Pesquisa Limite da Leitura Captura da intimação    Data para leitura Tip. Intim.                                       Intimado   Intimação                                                                            Partes           Juízo                                          Vara Blacklist                                                                                                                                                                  Link Intimacao deflagrada Intimação ID                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     Texto da Intimação
+0  6001 - INTIMAÇÃO CAPTURADA  DECIO FLAVIO GONCALVES TORRES FREIRE  ADVOGADO  TJMG - PJE - 1ª instância  5078118-87.2023.8.13.0024  29/04/2026 16:04:00  30/04/2026 01:52:17  Prazo: sem prazo  30/04/2026 01:00:28  30/04/2026 00:47:49               NaN  30/04/2026 01:52:17  30/04/2026 00:00:00   Intimação  MASTERCARD BRASIL SOLUCOES DE PAGAMENTO LTDA.  2950649102                           ANDRE MANSUR BRANDAO X BANCO BRADESCO S.A. e outros (2)  Belo Horizonte   16ª Vara Cível da Comarca de Belo Horizonte       Não  https://objectstorage.sa-saopaulo-1.oraclecloud.com/n/grgzajrtoi0u/b/eprotocol/o/intimation%2FDFA%2F20260430%2F5078118-87.2023.8.13.0024%2F31434150%2F2950649102.pdf                  Não     31434150                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                INTIMAÇÃO CAPTURADA EM: 30/04/2026\n====================================\nNúmero do processo: 5078118-87.2023.8.13.0024\nDisponibilização: 29/04/2026\nPesquisado: DECIO FLAVIO GONCALVES TORRES FREIRE - ADVOGADO\nTribunal/Sistema: TJMG-PJE-1ª instância\nPrazo:  sem prazo\nIntimado: MASTERCARD BRASIL SOLUCOES DE PAGAMENTO LTDA.\nParte: ANDRE MANSUR BRANDAO X BANCO BRADESCO S.A. e outros (2)\nVara/Juízo:  16ª Vara Cível da Comarca de Belo Horizonte - Belo Horizonte\nTipo : Intimação\n====================================\n------------------------\nIntimação (2950649102)\nDestinatário MASTERCARD BRASIL SOLUCOES DE PAGAMENTO LTDA.\nPrazo 0 sem prazo\nFechado? NÃO\nINTIMAÇÃO LIDA SEM A ABERTURA DO PRAZO\n------------------------\n30/04/2026 \nNúmero: 5078118-87.2023.8.13.0024  \nClasse: [CÍVEL] PROCEDIMENTO COMUM CÍVEL \n Órgão julgador: 16ª Vara Cível da Comarca de Belo Horizonte \n Última distribuição : 14/04/2023 \n Valor da causa: R$ 17.148,00 \n Assuntos: Defeito, nulidade ou anulação \n Segredo de justiça? NÃO \n Justiça gratuita? NÃO \n Pedido de liminar ou antecipação de tutela? NÃO\n \n \nPoder Judiciário do Estado de Minas Gerais\nPJe - Processo Judicial Eletrônico\nPartes Advogados\nANDRE MANSUR BRANDAO (AUTOR)\nANDRE MANSUR BRANDAO (ADVOGADO)\nBRUNO COUTINHO DE OLIVEIRA (ADVOGADO)\nMASTERCARD BRASIL SOLUCOES DE PAGAMENTO\nLTDA. (RÉU/RÉ)\nDECIO FLAVIO GONCALVES TORRES FREIRE\n(ADVOGADO)\nBANCO BRADESCO S.A. (RÉU/RÉ)\nANGELICA LIMA SILVA (ADVOGADO)\nCAIO VICTOR TRINDADE NOGUEIRA (ADVOGADO)\nRENATO MORAES BICALHO DE LANA (ADVOGADO)\nPAULO EMANUEL MAMBRINI NAZARE (ADVOGADO)\nRAPHAEL VICTOR SILVA (ADVOGADO)\nLILIAN DOS SANTOS RODRIGUES CURI (ADVOGADO)\nDocumentos\nId. Data da Assinatura Documento Tipo\n10670660426 29/04/2026 16:04 Despacho IntimaçãoNum. 10670660426 - Pág. 1\nAssinado eletronicamente por: LEONICE SILVESTRE DE SOUZA - 29/04/2026 16:04:49https://pje.tjmg.jus.br:443/pje/Processo/ConsultaDocumento/listView.seam?x=26042916044965600010666798845Número do documento: 26042916044965600010666798845\n PODER JUDICIÁRIO DO ESTADO DE MINAS GERAIS\nJustiça de Primeira Instância   \nComarca de Belo Horizonte / 16ª Vara Cível da Comarca de Belo Horizonte \n Avenida Raja Gabaglia, 1753, Luxemburgo, Belo Horizonte - MG - CEP: 30380-900\n \nPROCESSO Nº: 5078118-87.2023.8.13.0024 \nCLASSE: [CÍVEL] PROCEDIMENTO COMUM CÍVEL (7) \nASSUNTO: [Defeito, nulidade ou anulação] \nAUTOR: ANDRE MANSUR BRANDAO CPF: 678.700.076-68\nRÉU: BANCO BRADESCO S.A. CPF: 60.746.948/0001-12 e outros \n \nDESPACHO\n \n        Vistos.\n         \n        Expeça-se alvará para levantamento do valor depositado a título de\ncumprimento voluntário do julgado.\n        Após, intimem-se as partes para que, no prazo de 15 (quinze) dias,\ninformem se o feito pode ser extinto, nos termos do art. 924, II, CPC.\n         \n        P.I.\n \nBelo Horizonte, data da assinatura eletrônica.  Num. 10670660426 - Pág. 2\nAssinado eletronicamente por: LEONICE SILVESTRE DE SOUZA - 29/04/2026 16:04:49https://pje.tjmg.jus.br:443/pje/Processo/ConsultaDocumento/listView.seam?x=26042916044965600010666798845Número do documento: 26042916044965600010666798845\nADRIANA GARCIA RABELO\nJuiz(íza) de Direito\n 16ª Vara Cível da Comarca de Belo Horizonte\n------------------------\nhttps://objectstorage.sa-saopaulo-1.oraclecloud.com/n/grgzajrtoi0u/b/eprotocol/o/intimation%2FDFA%2F20260430%2F5078118-87.2023.8.13.0024%2F31434150%2F2950649102.pdf\n====================================\nDW LAW - Leitura automatizada painel de intimações\nID Intimação: 2950649102\nData da captura: 30/04/26\nALERTA DE INSTRUÇÃO: Nos termos do art. 5º, §1,º da Lei 11.419/2016, o acesso ao conteúdo das intimações processuais no sistema de processo eletrônico efetiva  \na consulta e certifica a ciência da intimação, deflagrando imediatamente o início da contagem do prazo. \nPortanto, É NECESSÁRIA A VERIFICAÇÃO DIRETA PELO USUÁRIO DO PRAZO INICIAL E FINAL para fins de resposta e/ou prática de ato processual pertinente à intimação lida.\n#ID_DW31434150#\n====================================\n
+1  6001 - INTIMAÇÃO CAPTURADA  DECIO FLAVIO GONCALVES TORRES FREIRE  ADVOGADO  TJMG - PJE - 1ª instância  0586720-81.2010.8.13.0079  29/04/2026 14:16:00  30/04/2026 01:52:30  Prazo: sem prazo  30/04/2026 01:11:38  30/04/2026 00:49:11               NaN  30/04/2026 01:52:30  30/04/2026 00:00:00   Intimação              PETROVIA COMERCIO DE COMBUSTIVEIS  2950518485  PETROVIA COMERCIO DE COMBUSTIVEIS X HELENICE MARIA SOUZA DE MIRANDA e outros (1)        Contagem          2ª Vara Cível da Comarca de Contagem       Não  https://objectstorage.sa-saopaulo-1.oraclecloud.com/n/grgzajrtoi0u/b/eprotocol/o/intimation%2FDFA%2F20260430%2F0586720-81.2010.8.13.0079%2F31434213%2F2950518485.pdf                  Não     31434213  INTIMAÇÃO CAPTURADA EM: 30/04/2026\n====================================\nNúmero do processo: 0586720-81.2010.8.13.0079\nDisponibilização: 29/04/2026\nPesquisado: DECIO FLAVIO GONCALVES TORRES FREIRE - ADVOGADO\nTribunal/Sistema: TJMG-PJE-1ª instância\nPrazo:  sem prazo\nIntimado: PETROVIA COMERCIO DE COMBUSTIVEIS\nParte: PETROVIA COMERCIO DE COMBUSTIVEIS X HELENICE MARIA SOUZA DE MIRANDA e outros (1)\nVara/Juízo:  2ª Vara Cível da Comarca de Contagem - Contagem\nTipo : Intimação\n====================================\n------------------------\nIntimação (2950518485)\nDestinatário PETROVIA COMERCIO DE COMBUSTIVEIS\nPrazo 0 sem prazo\nFechado? NÃO\nINTIMAÇÃO LIDA SEM A ABERTURA DO PRAZO\n------------------------\n30/04/2026 \nNúmero: 0586720-81.2010.8.13.0079  \nClasse: [CÍVEL] PROCEDIMENTO COMUM CÍVEL \n Órgão julgador: 2ª Vara Cível  da Comarca de Contagem \n Última distribuição : 21/09/2010 \n Valor da causa: R$ 18.850,00 \n Processo referência: 0586720-81.2010.8.13.0079 \n Assuntos: Interpretação / Revisão de Contrato \n Segredo de justiça? NÃO \n Justiça gratuita? NÃO \n Pedido de liminar ou antecipação de tutela? NÃO\n \n \nPoder Judiciário do Estado de Minas Gerais\nPJe - Processo Judicial Eletrônico\nPartes Advogados\nPETROVIA COMERCIO DE COMBUSTIVEIS (AUTOR)\nWAGNER LEANDRO DA SILVA (ADVOGADO)\nLEONARDO ARAUJO SOARES (ADVOGADO)\nLEONARDO JOSE MELO BRANDAO (ADVOGADO)\nAIRTON ALVES DE ALMEIDA (ADVOGADO)\nDECIO FLAVIO GONCALVES TORRES FREIRE\n(ADVOGADO)\nRODRIGO ROMANIELLO VALLADAO (ADVOGADO)\nHELENICE MARIA SOUZA DE MIRANDA (RÉU/RÉ)\nADEMIR DE SOUZA LATALIZA (ADVOGADO)\nFERNANDA LOPES LATALIZA PEIXOTO (ADVOGADO)\nEDINILSON DE MIRANDA (RÉU/RÉ)\nFERNANDA LOPES LATALIZA PEIXOTO (ADVOGADO)\nADEMIR DE SOUZA LATALIZA (ADVOGADO)\nDocumentos\nId. Data da Assinatura Documento Tipo\n10670487173 29/04/2026 14:16 Sentença IntimaçãoNum. 10670487173 - Pág. 1\nAssinado eletronicamente por: CINTIA MELO DA SILVA - 29/04/2026 14:16:21https://pje.tjmg.jus.br:443/pje/Processo/ConsultaDocumento/listView.seam?x=26042914162170500010666625592Número do documento: 26042914162170500010666625592\n                                                      \n \n \n \nPODER JUDICIÁRIO DO ESTADO DE MINAS GERAIS\n Tribunal de Justiça\n    2ª Vara Cível da Comarca de Contagem\n Avenida Maria da Glória Rocha, nº 425, Bairro Centro, CEP 32010-375, Contagem\n \n   \n   \nNúmero do processo:  0586720-81.2010.8.13.0079\n   \nClasse: \n   \nPolo Ativo:  PETROVIA COMERCIO DE COMBUSTIVEIS\n   \nADVOGADOS DO AUTOR: WAGNER LEANDRO DA SILVA, OAB nº MG27870G, LEONARDO\nARAUJO SOARES, OAB nº MG88196G, LEONARDO JOSE MELO BRANDAO, OAB nº\nMG53684G, AIRTON ALVES DE ALMEIDA, OAB nº MG53575G, DECIO FLAVIO GONCALVES\nTORRES FREIRE, OAB nº AC56543G, RODRIGO ROMANIELLO VALLADAO, OAB nº MG72264G\n   \nPolo Passivo:  HELENICE MARIA SOUZA DE MIRANDA, EDINILSON DE MIRANDA\n   \nADVOGADOS DOS RÉU/RÉ: ADEMIR DE SOUZA LATALIZA, OAB nº MG50528G, FERNANDA\nLOPES LATALIZA PEIXOTO, OAB nº MG86705G\n   \n \n   \n \n   Num. 10670487173 - Pág. 2\nAssinado eletronicamente por: CINTIA MELO DA SILVA - 29/04/2026 14:16:21https://pje.tjmg.jus.br:443/pje/Processo/ConsultaDocumento/listView.seam?x=26042914162170500010666625592Número do documento: 26042914162170500010666625592\nSENTENÇA\n   \nVistos.\n   \nPor serem capazes as partes, ser o objeto lícito e não havendo óbice de natureza formal,   o acordo de IDs HOMOLOGO\n10651182607, 10651184807 e 10651194381, para que surta seus jurídicos efeitos e extingo o feito com resolução do mérito,\nna forma do artigo 487, inciso III, alínea ‘b’, do CPC.\n   \nHonorários conforme acordado.\n   \nCustas remanescentes dispensadas, na forma do artigo 90, § 3º, do Código de Processo Civil (CPC).\n   \nDefiro a expedição de alvarás, na conformidade do que eventualmente restou acordado, bem como a liberação de\nvalores bloqueados e das restrições determinadas pelo Juízo, caso as haja.\n   \nDefiro, ainda, a restituição do recibo do veículo depositado em Secretaria, conforme requerido.\n   \nHomologo a renúncia ao prazo recursal.\n   \nDê-se baixa e arquivem-se.\n   \nP.R.I.C.\n   \nContagem, data de registro no sistema.\n  \n   \nPEDRO CAMARA RAPOSO-LOPES\n   \nJuiz de Direito\n   Num. 10670487173 - Pág. 3\nAssinado eletronicamente por: CINTIA MELO DA SILVA - 29/04/2026 14:16:21https://pje.tjmg.jus.br:443/pje/Processo/ConsultaDocumento/listView.seam?x=26042914162170500010666625592Número do documento: 26042914162170500010666625592\n  \n   \n  \n   \n  \n   \n  \n   \nGA\n   \n \n  \n------------------------\nhttps://objectstorage.sa-saopaulo-1.oraclecloud.com/n/grgzajrtoi0u/b/eprotocol/o/intimation%2FDFA%2F20260430%2F0586720-81.2010.8.13.0079%2F31434213%2F2950518485.pdf\n====================================\nDW LAW - Leitura automatizada painel de intimações\nID Intimação: 2950518485\nData da captura: 30/04/26\nALERTA DE INSTRUÇÃO: Nos termos do art. 5º, §1,º da Lei 11.419/2016, o acesso ao conteúdo das intimações processuais no sistema de processo eletrônico efetiva  \na consulta e certifica a ciência da intimação, deflagrando imediatamente o início da contagem do prazo. \nPortanto, É NECESSÁRIA A VERIFICAÇÃO DIRETA PELO USUÁRIO DO PRAZO INICIAL E FINAL para fins de resposta e/ou prática de ato processual pertinente à intimação lida.\n#ID_DW31434213#\n====================================\n
+2  6001 - INTIMAÇÃO CAPTURADA  DECIO FLAVIO GONCALVES TORRES FREIRE  ADVOGADO  TJMG - PJE - 1ª instância  0586720-81.2010.8.13.0079  29/04/2026 14:19:00  30/04/2026 01:52:56  Prazo: sem prazo  30/04/2026 01:11:38  30/04/2026 00:49:11               NaN  30/04/2026 01:52:56  30/04/2026 00:00:00   Intimação              PETROVIA COMERCIO DE COMBUSTIVEIS  2950525581  PETROVIA COMERCIO DE COMBUSTIVEIS X HELENICE MARIA SOUZA DE MIRANDA e outros (1)        Contagem          2ª Vara Cível da Comarca de Contagem       Não  https://objectstorage.sa-saopaulo-1.oraclecloud.com/n/grgzajrtoi0u/b/eprotocol/o/intimation%2FDFA%2F20260430%2F0586720-81.2010.8.13.0079%2F31434214%2F2950525581.pdf                  Não     31434214                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       INTIMAÇÃO CAPTURADA EM: 30/04/2026\n====================================\nNúmero do processo: 0586720-81.2010.8.13.0079\nDisponibilização: 29/04/2026\nPesquisado: DECIO FLAVIO GONCALVES TORRES FREIRE - ADVOGADO\nTribunal/Sistema: TJMG-PJE-1ª instância\nPrazo:  sem prazo\nIntimado: PETROVIA COMERCIO DE COMBUSTIVEIS\nParte: PETROVIA COMERCIO DE COMBUSTIVEIS X HELENICE MARIA SOUZA DE MIRANDA e outros (1)\nVara/Juízo:  2ª Vara Cível da Comarca de Contagem - Contagem\nTipo : Intimação\n====================================\n------------------------\nIntimação (2950525581)\nDestinatário PETROVIA COMERCIO DE COMBUSTIVEIS\nPrazo 0 sem prazo\nFechado? NÃO\nINTIMAÇÃO LIDA SEM A ABERTURA DO PRAZO\n------------------------\n PODER JUDICIÁRIO DO EST ADO DE MINAS GERAIS   \n Justiça de Primeira Instância\nComarca de Contagem / 2ª Vara Cível da Comarca de Contagem\nAvenida Maria da Glória Rocha, 425, Centro, Contagem - MG - CEP: 32010-375\n \nPROCESSO Nº: 0586720-81.2010.8.13.0079 \nCLASSE: [CÍVEL] PROCEDIMENT O COMUM CÍVEL  (7)  \nPETROVIA  COMERCIO DE COMBUSTIVEIS CPF: 05.797.257/0001-30\nHELENICE MARIA  SOUZA  DE MIRANDA  CPF: 681.505.396-20 e outros\nPARTES INTIMADAS A PROCEDEREM CONFORME SENTENÇA  RETRO,.... Defir o, ainda, a\nrestituição do r ecibo do veículo depositado em Secr etaria, conforme r equerido.....INTIME-\nSE  \nCINTIA  MELO DA  SILVA\nContagem, data da assinatura eletrônica.\nAssinado eletronicamente por CINTIA MELO DA SILVA\n29/04/2026 14:19:06\nhttps://pje.tjmg.jus.br:443/pje/Processo/ConsultaDocumento/listView.seam26042914173331700010666639081\n------------------------\nhttps://objectstorage.sa-saopaulo-1.oraclecloud.com/n/grgzajrtoi0u/b/eprotocol/o/intimation%2FDFA%2F20260430%2F0586720-81.2010.8.13.0079%2F31434214%2F2950525581.pdf\n====================================\nDW LAW - Leitura automatizada painel de intimações\nID Intimação: 2950525581\nData da captura: 30/04/26\nALERTA DE INSTRUÇÃO: Nos termos do art. 5º, §1,º da Lei 11.419/2016, o acesso ao conteúdo das intimações processuais no sistema de processo eletrônico efetiva  \na consulta e certifica a ciência da intimação, deflagrando imediatamente o início da contagem do prazo. \nPortanto, É NECESSÁRIA A VERIFICAÇÃO DIRETA PELO USUÁRIO DO PRAZO INICIAL E FINAL para fins de resposta e/ou prática de ato processual pertinente à intimação lida.\n#ID_DW31434214#\n====================================\n
+[2026-05-05 14:30:51] [INFO] reader — Coluna CNJ mapeada: 'Processo'
+[2026-05-05 14:30:51] [INFO] reader — DW1.xlsx: total de linhas lidas=214 | CNJ preenchido=214 | CNJ vazio=0
+[2026-05-05 14:30:51] [INFO] reader — Colunas mapeadas: CNJ='Processo', DataPublicacao='Disponibilização', Texto='Intimação', Cliente='Advogado', Tribunal/Sistema extraídos por fonte
+[2026-05-05 14:30:51] [WARNING] reader — Arquivo não encontrado, pulando: C:\Users\lucas.paim\Desktop\processo_triage\input\DW2.xlsx
+[2026-05-05 14:30:51] [INFO] reader — 📂 Lendo fonte: WEBJUR
+[2026-05-05 14:30:51] [INFO] reader — Arquivo bruto detectado: C:\Users\lucas.paim\Desktop\processo_triage\input\Webjur1.csv
+[2026-05-05 14:30:51] [INFO] reader — Arquivo sanitizado detectado: C:\Users\lucas.paim\Desktop\processo_triage\input\Webjur1_SANITIZADO.csv
+[2026-05-05 14:30:51] [INFO] reader — Usando sanitizado no lugar do bruto.
+[2026-05-05 14:30:51] [INFO] reader — Lendo: C:\Users\lucas.paim\Desktop\processo_triage\input\Webjur1_SANITIZADO.csv
+[2026-05-05 14:30:51] [INFO] reader — Arquivo efetivamente lido para 'Webjur1.csv': Webjur1_SANITIZADO.csv
+[2026-05-05 14:30:52] [INFO] reader — CSV 'Webjur1.csv' lido com encoding=cp1252, sep=';', skiprows=0
+[2026-05-05 14:30:52] [INFO] reader — Colunas lidas do arquivo 'Webjur1.csv': ['Codigo', 'Número do Processo', 'Data da Publicação', 'Termo Localizado', 'Diário Oficial', 'Página', 'Juizo', 'Publicação', 'targetID']
+[2026-05-05 14:30:52] [INFO] reader — Primeiras 3 linhas de 'Webjur1.csv':
+       Codigo                 Número do Processo Data da Publicação         Termo Localizado               Diário Oficial   Página                             Juizo                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Publicação targetID
+0  9190224444  01.017.001.15.4 51.0301.1348.0000         2026-04-29  FUNDACAO GETULIO VARGAS               MUNICIPALIDADE  0000159                        RIO BRANCO                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           PREFEITURA MUNICIPAL DE RIO BRANCO - PMRB SECRETARIA MUNICIPAL DE INFRAESTRUTURA E MOBILIDADE URBANA - SEINFRA 3º TERMO DE APOSTILAMENTO AO CONTRATO Nº 01160009/2024 PROCESSO ADM.: Nº 234 - CPL 01/PMRB CONCORRENCIA ELETRONICA SRP Nº 014/2023/SEINFRA CONTRATADO: EMOT CONSTRUCOES LTDA. OBJETO - Execucao de Servicos de Engenharia (Execucao, Manutencao, Recuperacao e Recomposicao de Pavimentos, Reparos nas Redes de: Dre- nagem, Agua e Esgoto, assim como de seus dispositivos, execucao e reparos de calcadas, e etc.) - Lote 10, Programa Asfalta Rio Branco. VALOR CONTRATADO R$ 15.130.000,00 (quinze milhoes, cento e trinta mil reais). Aos 23 (vinte e tres) dias do mes de abril de 2026, na sede da SECRETARIA MUNICIPAL DE INFRAESTRUTURA E MOBILIDADE URBANA, na Rua: Rui Barbosa, nº 325, Centro - Rio Branco - Acre. Foi lavrado o presente Termo de Apostilamento ao Contrato nº 01160009/2024, visando a fixacao dos valores contratuais resultantes da aplicacao do indice de reajuste previsto no Contrato ora apostilado, nos termos que se seguem: Com base nas informacoes lancadas nos autos dos Processos RB- SEI 0116.005547/2025-56 e 0116.002636/2025-83, Parecer da PGM Nº 2026.02.000467, identificado no preambulo e considerando-se as disposicoes contidas na CLAUSULA QUINTA - DO REAJUSTE Data do orcamento: SI- NAPI ACRE - 07/2023 e SICRO3 04/2023 do contrato ora apostilado, em conformidade com § 3º do art. 92 da Lei nº 14.133/21 e suas alteracoes, tera direito ao Reajuste de R$ 1.519.498,35 (um milhao, quinhentos e dezenove mil, quatrocentos e noventa e oito reais e trinta e cinco centavos), referente ao 1º e 2° Aniversario do contrato em questao, resultantes da aplicacao do indice de reajuste divulgado pela Fundacao Getulio Vargas (INCC-DI), que apos o Reajuste perfaz um valor contratual de R$ 16.649.418,35 (dezesseis milhoes, seiscentos e quarenta e nove mil, quatrocentos e dezoito reais e trinta e cinco centavos). CLAUSULA SETIMA - EMPENHO E DOTACAO DO VALOR: As despesas ocorrerao por conta do Programa de Trabalho: 01.017.001.15.4 51.0301.1348.0000 (pavimentacao de Vias Urbanas) e 01.017.001.15.451.03 01.2058.0000 (Melhoria e Manutencao de Vias Urbanas) - Rubrica Orcamen- taria: 4.4.90.51.00.00.00 - Obras e Instalacoes, Fonte de Recursos: 1.500. 2º - As demais clausulas permanecem inalteradas. Antonio Cid Rodrigues Ferreira Secretario Municipal de Infraestrutura e Mobilidade Urbana Decreto n° 03/2025 Contratante      NaN
+1  9190289724          0700690-89.2025.8.01.0007         2026-04-30           ESTADO DO ACRE  I – JUDICIAL – 2ª INSTÂNCIA  0000017                   2ª CÂMARA CÍVEL                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   INTIMAÇÃO DAS PARTES E DE SEUS PROCURADORES - CIÊNCIA DE DECISÃO COLEGIADA / ACÓRDÃO - SEGUNDA CÂMARA CÍVEL.    Classe: Apelacao Civel n. 0700690-89.2025.8.01.0007 Foro de Origem: Xapuri Orgao: Segunda Camara Civel Relatora: Desª. Waldirene Cordeiro Apelante: G. F. da S.. D. Publico: Lais Andrade Santos (OAB: 229411/RJ). Apelado: M. P. do E. do A.. Promotor: Vanderlei Batista Cerqueira. Assunto: de Trafico Ilicito e Uso Indevido de Drogas Ementa. CRIANCA E DO ADOLESCENTE. APELACAO CIVEL EM APURA- CAO DE ATO INFRACIONAL ANALOGO A COACAO NO CURSO DO PRO- CESSO E INTEGRACAO EM ORGANIZACAO CRIMINOSA. PRELIMINAR DE INTEMPESTIVIDADE. REJEITADA. MATERIALIDADE E AUTORIA COM- PROVADAS. MEDIDA SOCIOEDUCATIVA DE INTERNACAO. ADEQUACAO E PROPORCIONALIDADE. APELO DESPROVIDO. I. CASO EM EXAME 1. Apelacao civel interposta contra sentenca, que julgou procedente a representacao e aplicou medida socioeducativa de internacao pelo prazo de 3 anos, com relatorios semestrais de acompanhamento, em razao da pratica de atos infracionais analogos ao art. 344 do Codigo Penal e ao art. 2º da Lei nº 12.850/2013, na forma do art. 69 do Codigo Penal. Sustenta-se a atipicidade da conduta relativa a coacao no curso do processo, a existencia de mera co- gitacao ou ato preparatorio impunivel, a fragilidade da prova oral por suposto testemunho indireto, a ausencia de testemunhas presenciais arroladas pela acusacao, a insuficiencia probatoria quanto a integracao em organizacao cri- minosa e a desproporcionalidade da medida de internacao. II. QUESTOES EM DISCUSSAO 2. Ha tres questoes em discussao: (i) saber se o recurso e tempestivo, diante da ausencia de manifestacao formal do adolescente sobre o desejo de re- correr, (ii) saber se o conjunto probatorio autoriza o reconhecimento dos atos infracionais analogos a coacao no curso do processo e a integracao em orga- nizacao criminosa, e (iii) saber se a medida socioeducativa de internacao e adequada, necessaria e proporcional ao caso concreto. III. RAZOES DE DECIDIR 3. A preliminar de intempestividade foi rejeitada. Embora o prazo recursal no ambito do Estatuto da Crianca e do Adolescente seja contado de forma conti- nua, a intimacao pessoal do adolescente nao observou a formalidade prevista no art. 190, § 2º, do ECA, por nao ter sido colhida sua manifestacao expressa acerca do desejo de recorrer. Tal vicio impediu o inicio valido da fluencia do prazo recursal. 4. No merito, o conjunto probatorio autorizou a manutencao do reconhecimento do ato infracional analogo ao crime de coacao no curso do processo. O art. 344 do Codigo Penal tutela a liberdade de atuacao de quem intervem em processo judicial, policial ou administrativo, punindo o uso de violencia ou grave ameaca com o fim de favorecer interesse proprio ou alheio. Cuida-se de delito formal, cuja consumacao prescinde da obtencao do resultado pretendido. 5. As provas orais e documentais indicaram que o Apelante proferiu graves ameacas contra membro do Ministerio Publico responsavel por sua persecu- cao socioeducativa.A propria versao defensiva, nao afastou o carater objeti- vamente intimidatorio da conduta, nem o seu nexo com o processo em curso. 6. Nao prospera a alegacao de mera cogitacao impunivel ou de ausencia de inicio de execucao de homicidio, pois a imputacao central nao recaiu sobre tentativa de homicidio, mas sobre coacao no curso do processo. A referencia a eventual atentado preterito funcionou como reforco da grave ameaca, aumen- tando o potencial intimidatorio da conduta. 7. Sem acolhida a tese de prova exclusivamente indireta. O acervo probatorio nao se resumiu a relatos reflexos, mas contemplou depoimento judicializado da coordenadora da unidade, relatorio tecnico produzido e elementos coeren- tes entre si, submetidos ao contraditorio. A ausencia de testemunhas presen- ciais adicionais nao gerou nulidade, ante a falta de demonstracao concreta de prejuizo. 8. Quanto ao ato infracional analogo ao art. 2º da Lei nº 12.850/2013, assentou- -se que a configuracao da integracao em organizacao criminosa exige prova segura da adesao consciente e voluntaria do agente a estrutura associativa, o que pode ser demonstrado pela convergencia de elementos objetivos extrai- dos do comportamento do Apelante, da reproducao de signos de pertencimen- to e da harmonia dos relatos institucionais. 9. A medida socioeducativa de internacao foi mantida por se mostrar adequada e proporcional. A internacao, ainda que excepcional, e admissivel nas hipote- ses do art. 122 do ECA, especialmente quando o ato infracional e praticado mediante grave ameaca a pessoa ou ha reiteracao no cometimento de outras infracoes graves. IV. DISPOSITIVO E TESE 10. Preliminar rejeitada. No merito, apelo desprovido. Tese de julgamento:  a ausencia de manifestacao expressa do adolescente, no ato de sua intimacao pessoal, sobre o desejo de recorrer, impede o inicio valido do prazo recursal, configura-se o ato infracional analogo ao art. 344 do Codigo Penal quando ha grave ameaca dirigida a integrante do sistema de justica, com finalidade de favorecimento indevido em processo em curso, a integracao em organizacao criminosa pode ser demonstrada pela valoracao conjunta e racio- nal de elementos objetivos de pertencimento faccioso, e a medida socioeduca- tiva de internacao e cabivel quando a gravidade concreta dos fatos evidencia a insuficiencia das medidas menos gravosas . Dispositivos relevantes citados: CP, arts. 69 e 344, CPC, art. 1.012, § 1º e § 3º,ECA, arts. 122, I e II, 141, § 2º, 190, § 2º, e 198, VI.. Jurisprudencia relevante citada: TJGO, Apelacao/Reexame Necessario 0429938-12.2017.8.09.0051, Rel. Des. Jairo Ferreira Junior, j. 1º.2.2021. Vistos, relatados e discutidos estes autos de Apelacao Civel n. 0700690- 89.2025.8.01.0007, ACORDAM as(os) Senhoras(res) Desembargadoras(res) da Segunda Camara Civel do Tribunal de Justica do Estado do Acre, por una- nimidade, rejeitar a preliminar e, no merito, negar provimento ao apelo, nos termos do voto da relatora.      NaN
+2  9190291074          0002491-68.2026.8.01.0000         2026-04-30           ESTADO DO ACRE          IV – ADMINISTRATIVO  0000039   SECRETARIA DE GESTÃO DE PESSOAS      Processo Administrativo nº: 0002491-68.2026.8.01.0000 Local: Rio Branco Unidade: GAGEP Relator: Secretaria da Secretaria de Gestao de Pessoas Requerente: Raquele Craveiro Morais Requerido: Tribunal de Justica do Estado do Acre Objeto: Licenca-Premio DECISAO 1. RESUMO DOS FATOS Trata-se de requerimento administrativo formulado pela servidora RAQUEL CRAVEIRO MORAIS, matricula 7001337, lotada no 1º Juizado Especial Civel da Comarca de Rio Branco, em que visa a concessao de licenca-premio, com fulcro nos arts. 132 a 137 da Lei Complementar Estadual n. 39/93. Instada, a Divisao de Gestao de Pessoas desta Secretaria (DISER) informou que a requerente foi nomeada para exercer o cargo efetivo de Auxiliar Judi- ciario, codigo PJ-NM-201, Classe  A , padrao I, do quadro de pessoal per- manente de atividades auxiliares do Poder Judiciario, conforme Portaria nº. 102/2011, datado de 13/1/2011. Tomou posse na data de 1º/2/2011. Por forca do Ato nº. 004/2013 (DJe n. 5.215, fls. 116/133de 7.8.2014) foi enquadrada no cargo de Tecnico Judiciario, codigo EJ02-NM, classe  A , nivel 1. Atualmente a servidora encontra-se na classe  B , nivel 7. A servidora conta com 5.555 dias, ou seja, 15 anos, 2 meses e 20 dias de tem- po de contribuicao prestado neste Poder Judiciario, no periodo de 1º/2/2011 a 17/04/2026. E, ainda, obteve em seu favor a averbacao para todos os efeitos legais, do tempo de contribuicao prestado perante a Secretaria de Estado de Saude (15/3/2004 a 31/7/2004). A postulante nao registra faltas injustificadas no periodo ora pleiteado, nem incorreu em sancoes estatuidas no art. 134 da LCE n. 39/93. No que diz respeito a licenca-premio a servidora registra o deferimento de 2 periodos (180 dias), conforme P-0006291-56.2016.8.01.0000 e P-0006720- 47.2021.8.01.0000, tendo usufruido 10 (dez) dias e convertido 120 (cento e vinte) dias em pecunia, restando 50 (cinquenta) dias de saldo para usufruir em data oportuna. E o breve relatorio. Passo a decidir. 2. ANALISE DO PEDIDO E FUNDAMENTACAO Sobre o objeto do pedido, cumpre ressaltar que a licenca-premio e direito assegurado ao servidor publico, instituido no ordenamento juridico pela Lei Federal n.º 1.711/52, e mantido pela Lei Federal nº 8.112, de 11 de dezembro de 1990, que versa sobre o Regime Juridico dos Servidores Publicos Civis da Uniao, das Autarquias e das Fundacoes Publicas Federais. No ambito do Poder Judiciario do Estado do Acre, a licenca em questao possui esteio nos artigos 132 e seguintes da Lei Complementar Estadual n.º 39/93, cujo teor do art. 132 transcreve-se a seguir: Art. 132. Apos cada cinco anos de efetivo exercicio o servidor fara jus a 03 (tres) meses de licenca, a titulo de premio, com remuneracao do cargo efetivo, observado o disposto no art. 133, deste Estatuto. § 1º O periodo aquisitivo de direito sera contado a partir da data de admissao em qualquer orgao da Administracao Publica Estadual. § 2º A requerimento do servidor e observadas as necessidades de servico, a licenca podera ser concedida integralmente, de uma so vez, ou em duas ou tres parcelas. § 3º A licenca-premio sera contada em dobro para efeito de aposentadoria, caso o servidor nao a goze. § 4º Os periodos de licenca-premio ja adquiridos e nao gozados pelo servidor que vier a falecer, serao convertidos em pecunia, em favor dos seus benefi- ciarios da pensao. Da exegese do artigo supracitado, verifica-se que a essencia da licenca em tela e uma especie de afastamento remunerado das funcoes publicas, desti- nada a estimular e promover a adocao de determinado comportamento de- sejado pelo Poder Publico, qual seja, a assiduidade dos servidores, e sera adquirida por todos servidores estaduais que demonstrarem o cumprimento de um periodo de cinco anos de efetivo exercicio prestado ao Estado e, ainda, que revelarem assiduidade durante o quinquenio, no desempenho das fun- coes que estao na sua esfera de competencia, levando em consideracao que a licenca-premio e devida tao somente aos servidores efetivos, ou efetivos que exercam cargo em comissao ou funcao de confianca. Na hipotese em apreco, com base no normativo supra, levando-se em consideracao a data de ingresso da servidora no servico publico estadual (1º/2/2011), a considerar o periodo averbado de tempo de contribuicao pe- rante a Secretaria de Estado de Saude, no periodo de 15/3/2004 a 31/7/2004 (SEI n. 0001022-26.2022.8.01.0001), constata-se que o direito ora perseguin- do (licenca premio) e o seguinte: 1º. Periodo: 1º/2/2011 a 31/1/2016 - usufruido 90 dias. 2º. Periodo: 1º/2/2016 a 31/1/2021 - a usufruir. 3º. Periodo: 15/3/2004 a 31/7/2004 (4 meses e 19 dias - periodo averbado) e 1º/2/2021 a 12/9/2025 - a conceder. Com relacao ao periodo pretendido, ressalte-se que nos termos do artigo 134 da Lei Complementar Estadual n.º 39/93, existem causas que, durante o peri- odo aquisitivo relativo ao periodo pugnado a licenca, obstam a concessao da licenca-premio, a citar: Art. 134. Nao se concedera licenca-premio ao servidor que durante periodo aquisitivo: I - sofrer penalidade disciplinar de suspensao, II - afastar-se do cargo em virtude de: a) licenca por motivo de doenca em pessoa da familia, sem remuneracao, b) licenca para tratar de interesses particulares, c) condenacao a pena privativa de liberdade por sentenca definitiva, d) afastamento para acompanhar conjuge, companheiro ou companheira. Paragrafo unico. As faltas injustificadas retardarao a concessao da licenca prevista neste artigo, na proporcao de 01 (um) mes para cada falta. No caso dos autos, verifica-se que a servidora nao incorreu em quaisquer das hipoteses contidas no dispositivo supramencionado, sinalizando a inexistencia de qualquer impedimento legal a concessao do 3º periodo de licenca-premio. 3. DECISAO Por todo o exposto, e em conformidade com a Resolucao n.º 331/2025, defiro o pedido formulado, reconhecendo o direito da servidora RAQUEL CRAVEI- RO MORAIS, matricula 7001337, gozar 01 (um) periodo de licenca-premio, devendo ser observado que o numero de servidores em gozo simultaneo de licenca nao podera ultrapassar a um decimo da lotacao da respectiva unidade administrativa (art. 137 da LCE 39/93) e que o periodo de concessao deve ser objeto de acordo entre ao servidor e o seu chefe superior (art. 132, § 2º, da LCE n. 39/93). Notifique-se. Dispense-se o prazo recursal. A Divisao de Gestao de Servidores - DISER, para anotacoes nos Sistema ADMRH, com a devida certificacao dos procedimentos adotados. Apos, arquive-se com baixa eletronica. Data e assinatura eletronicas. Rio Branco-AC, 22 de abril de 2026. ________________________________________      NaN
+[2026-05-05 14:30:52] [INFO] reader — Coluna CNJ mapeada: 'Número do Processo'
+C:\Users\lucas.paim\Desktop\processo_triage\reader.py:103: UserWarning: Parsing dates in %Y-%m-%d format when dayfirst=True was specified. Pass `dayfirst=False` or specify a format to silence this warning.
+  d = pd.to_datetime(val, errors="coerce", dayfirst=True)
+[2026-05-05 14:30:52] [INFO] reader — Webjur1.csv: total de linhas lidas=8327 | CNJ preenchido=8317 | CNJ vazio=10
+[2026-05-05 14:30:52] [WARNING] reader — Webjur1.csv: exemplos de linhas com CNJ vazio: [{'Codigo': '9194024434', 'Número do Processo': '', 'Data da Publicação': '2026-05-04', 'Termo Localizado': 'MINISTERIO PUBLICO FEDERAL', 'Diário Oficial': '', 'Página': '11', 'Juizo': ' ', 'Publicação': '    Publicação eletrônica em formato de documento digitalizado br URL da imagem: http://www.webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260504&cdsequencial=9194024434&html=1 br  br [[ MINISTERIO PUBLICO FEDERAL ]] [[ MINISTERIO PUBLICO FEDERAL ]]   BR  font face=verdana size=1 color=black Link Imagem:   /font  font face=verdana size=2 color=black  A HREF= http://webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260430&html=1&cdsequencial=9194024434  Target=_Blank Está publicação está em forma de imagem. Clique aqui para vê-la. /A   font color=White size=1px http://webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260430&html=1&cdsequencial=9194024434 /font ', 'targetID': ''}, {'Codigo': '9194025064', 'Número do Processo': '', 'Data da Publicação': '2026-05-04', 'Termo Localizado': 'MINISTERIO PUBLICO FEDERAL', 'Diário Oficial': '', 'Página': '33', 'Juizo': ' ', 'Publicação': '    Publicação eletrônica em formato de documento digitalizado br URL da imagem: http://www.webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260504&cdsequencial=9194025064&html=1 br  br [[ MINISTERIO PUBLICO ESTADUAL ]] [[ MINISTERIO PUBLICO FEDERAL ]]   BR  font face=verdana size=1 color=black Link Imagem:   /font  font face=verdana size=2 color=black  A HREF= http://webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260430&html=1&cdsequencial=9194025064  Target=_Blank Está publicação está em forma de imagem. Clique aqui para vê-la. /A   font color=White size=1px http://webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260430&html=1&cdsequencial=9194025064 /font ', 'targetID': ''}, {'Codigo': '9194025155', 'Número do Processo': '', 'Data da Publicação': '2026-05-04', 'Termo Localizado': 'MINISTERIO PUBLICO FEDERAL', 'Diário Oficial': '', 'Página': '35', 'Juizo': ' ', 'Publicação': '    Publicação eletrônica em formato de documento digitalizado br URL da imagem: http://www.webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260504&cdsequencial=9194025155&html=1 br  br [[ MINISTERIO PUBLICO ESTADUAL ]] [[ MINISTERIO PUBLICO FEDERAL ]]   BR  font face=verdana size=1 color=black Link Imagem:   /font  font face=verdana size=2 color=black  A HREF= http://webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260430&html=1&cdsequencial=9194025155  Target=_Blank Está publicação está em forma de imagem. Clique aqui para vê-la. /A   font color=White size=1px http://webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260430&html=1&cdsequencial=9194025155 /font ', 'targetID': ''}, {'Codigo': '9194025429', 'Número do Processo': '', 'Data da Publicação': '2026-05-04', 'Termo Localizado': 'MINISTERIO PUBLICO FEDERAL', 'Diário Oficial': '', 'Página': '36', 'Juizo': ' ', 'Publicação': '    Publicação eletrônica em formato de documento digitalizado br URL da imagem: http://www.webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260504&cdsequencial=9194025429&html=1 br  br [[ MINISTERIO PUBLICO FEDERAL ]] [[ MINISTERIO PUBLICO FEDERAL ]]   BR  font face=verdana size=1 color=black Link Imagem:   /font  font face=verdana size=2 color=black  A HREF= http://webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260430&html=1&cdsequencial=9194025429  Target=_Blank Está publicação está em forma de imagem. Clique aqui para vê-la. /A   font color=White size=1px http://webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260430&html=1&cdsequencial=9194025429 /font ', 'targetID': ''}, {'Codigo': '9194024944', 'Número do Processo': '', 'Data da Publicação': '2026-05-04', 'Termo Localizado': 'MINISTERIO PUBLICO', 'Diário Oficial': '', 'Página': '12', 'Juizo': ' ', 'Publicação': '    Publicação eletrônica em formato de documento digitalizado br URL da imagem: http://www.webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260504&cdsequencial=9194024944&html=1 br  br [[ MINISTERIO PUBLICO ]] [[ MINISTERIO PUBLICO ]] [[ MINISTERIO PUBLICO ]] [[ MINISTERIO PUBLICO ]]   BR  font face=verdana size=1 color=black Link Imagem:   /font  font face=verdana size=2 color=black  A HREF= http://www.webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260430&html=1&cdsequencial=9194024944  Target=_Blank Está publicação está em forma de imagem. Clique aqui para vê-la. /A   font color=White size=1px http://www.webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260430&html=1&cdsequencial=9194024944 /font ', 'targetID': ''}]
+C:\Users\lucas.paim\Desktop\processo_triage\reader.py:85: UserWarning: Parsing dates in %Y-%m-%d format when dayfirst=True was specified. Pass `dayfirst=False` or specify a format to silence this warning.
+  pd_timestamp = pd.to_datetime(val, errors="coerce", dayfirst=True)
+[2026-05-05 14:30:55] [INFO] reader — Colunas mapeadas: CNJ='Número do Processo', DataPublicacao='Data da Publicação', Texto='Publicação', Cliente='Termo Localizado', Tribunal/Sistema extraídos por fonte
+[2026-05-05 14:30:55] [INFO] reader — Sanitizado não encontrado; usando bruto: C:\Users\lucas.paim\Desktop\processo_triage\input\Webjur2.csv
+[2026-05-05 14:30:55] [WARNING] reader — Arquivo não encontrado, pulando: C:\Users\lucas.paim\Desktop\processo_triage\input\Webjur2.csv
+[2026-05-05 14:30:55] [INFO] reader — 📂 Lendo fonte: MODO_LEGALONE_INTIMACOES
+[2026-05-05 14:30:55] [WARNING] reader — Arquivo não encontrado, pulando: C:\Users\lucas.paim\Desktop\processo_triage\input\ModoLegalOneIntimacoes1.xlsx
+[2026-05-05 14:30:55] [WARNING] reader — Arquivo não encontrado, pulando: C:\Users\lucas.paim\Desktop\processo_triage\input\ModoLegalOneIntimacoes2.xlsx
+[2026-05-05 14:30:55] [WARNING] reader — Nenhum arquivo encontrado para esta fonte.
+[2026-05-05 14:30:55] [INFO] reader — read_all_external: antes do filtro CNJ vazio=8597 | com CNJ=8587 | sem CNJ=10
+[2026-05-05 14:30:55] [WARNING] reader — read_all_external: exemplos sem CNJ: [{'cnj': '', '_data': '2026-05-04', '_data_publicacao': '2026-05-04', '_texto': '    Publicação eletrônica em formato de documento digitalizado br URL da imagem: http://www.webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260504&cdsequencial=9194024434&html=1 br  br [[ MINISTERIO PUBLICO FEDERAL ]] [[ MINISTERIO PUBLICO FEDERAL ]]   BR  font face=verdana size=1 color=black Link Imagem:   /font  font face=verdana size=2 color=black  A HREF= http://webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260430&html=1&cdsequencial=9194024434  Target=_Blank Está publicação está em forma de imagem. Clique aqui para vê-la. /A   font color=White size=1px http://webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260430&html=1&cdsequencial=9194024434 /font ', '_cliente': 'MINISTERIO PUBLICO FEDERAL', '_tribunal': '', '_sistema': 'DJEN', '_origem_arquivo': 'Webjur1_SANITIZADO.csv', '_fonte': 'webjur'}, {'cnj': '', '_data': '2026-05-04', '_data_publicacao': '2026-05-04', '_texto': '    Publicação eletrônica em formato de documento digitalizado br URL da imagem: http://www.webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260504&cdsequencial=9194025064&html=1 br  br [[ MINISTERIO PUBLICO ESTADUAL ]] [[ MINISTERIO PUBLICO FEDERAL ]]   BR  font face=verdana size=1 color=black Link Imagem:   /font  font face=verdana size=2 color=black  A HREF= http://webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260430&html=1&cdsequencial=9194025064  Target=_Blank Está publicação está em forma de imagem. Clique aqui para vê-la. /A   font color=White size=1px http://webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260430&html=1&cdsequencial=9194025064 /font ', '_cliente': 'MINISTERIO PUBLICO FEDERAL', '_tribunal': '', '_sistema': 'DJEN', '_origem_arquivo': 'Webjur1_SANITIZADO.csv', '_fonte': 'webjur'}, {'cnj': '', '_data': '2026-05-04', '_data_publicacao': '2026-05-04', '_texto': '    Publicação eletrônica em formato de documento digitalizado br URL da imagem: http://www.webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260504&cdsequencial=9194025155&html=1 br  br [[ MINISTERIO PUBLICO ESTADUAL ]] [[ MINISTERIO PUBLICO FEDERAL ]]   BR  font face=verdana size=1 color=black Link Imagem:   /font  font face=verdana size=2 color=black  A HREF= http://webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260430&html=1&cdsequencial=9194025155  Target=_Blank Está publicação está em forma de imagem. Clique aqui para vê-la. /A   font color=White size=1px http://webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260430&html=1&cdsequencial=9194025155 /font ', '_cliente': 'MINISTERIO PUBLICO FEDERAL', '_tribunal': '', '_sistema': 'DJEN', '_origem_arquivo': 'Webjur1_SANITIZADO.csv', '_fonte': 'webjur'}, {'cnj': '', '_data': '2026-05-04', '_data_publicacao': '2026-05-04', '_texto': '    Publicação eletrônica em formato de documento digitalizado br URL da imagem: http://www.webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260504&cdsequencial=9194025429&html=1 br  br [[ MINISTERIO PUBLICO FEDERAL ]] [[ MINISTERIO PUBLICO FEDERAL ]]   BR  font face=verdana size=1 color=black Link Imagem:   /font  font face=verdana size=2 color=black  A HREF= http://webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260430&html=1&cdsequencial=9194025429  Target=_Blank Está publicação está em forma de imagem. Clique aqui para vê-la. /A   font color=White size=1px http://webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260430&html=1&cdsequencial=9194025429 /font ', '_cliente': 'MINISTERIO PUBLICO FEDERAL', '_tribunal': '', '_sistema': 'DJEN', '_origem_arquivo': 'Webjur1_SANITIZADO.csv', '_fonte': 'webjur'}, {'cnj': '', '_data': '2026-05-04', '_data_publicacao': '2026-05-04', '_texto': '    Publicação eletrônica em formato de documento digitalizado br URL da imagem: http://www.webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260504&cdsequencial=9194024944&html=1 br  br [[ MINISTERIO PUBLICO ]] [[ MINISTERIO PUBLICO ]] [[ MINISTERIO PUBLICO ]] [[ MINISTERIO PUBLICO ]]   BR  font face=verdana size=1 color=black Link Imagem:   /font  font face=verdana size=2 color=black  A HREF= http://www.webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260430&html=1&cdsequencial=9194024944  Target=_Blank Está publicação está em forma de imagem. Clique aqui para vê-la. /A   font color=White size=1px http://www.webjur.com.br/ImagemPublicacao/?cdjornaloriginal=13&dtpublicacao=20260430&html=1&cdsequencial=9194024944 /font ', '_cliente': 'MINISTERIO PUBLICO', '_tribunal': '', '_sistema': 'DJEN', '_origem_arquivo': 'Webjur1_SANITIZADO.csv', '_fonte': 'webjur'}]
+[2026-05-05 14:30:55] [WARNING] reader — Removidas 10 linhas com CNJ vazio das bases externas.
+[2026-05-05 14:30:55] [INFO] matcher — Bases externas: 8587 linhas lidas (antes de dedup)
+[2026-05-05 14:30:55] [INFO] matcher — Duplicatas removidas: 2002
+   🔍 Matching:   0%|          | 0/6585 [00:00<?, ?it/s]
+   🔍 Matching: 100%|██████████| 6585/6585 [00:00<00:00, 92888.90it/s]
+[2026-05-05 14:30:55] [INFO] matcher — Matching: 5879 SEM MATCH, 706 COM MATCH
+[2026-05-05 14:30:55] [INFO] matcher — 
+[2026-05-05 14:30:55] [INFO] matcher — ============================================================
+[2026-05-05 14:30:55] [INFO] matcher — RESULTADOS DO MATCHING
+[2026-05-05 14:30:55] [INFO] matcher — ============================================================
+[2026-05-05 14:30:55] [INFO] matcher —    Total processado: 6585
+[2026-05-05 14:30:55] [INFO] matcher —    Trabalhista sem match: 791 (12.0%)
+[2026-05-05 14:30:55] [INFO] matcher —    Civel sem match: 5088 (77.3%)
+[2026-05-05 14:30:55] [INFO] matcher —    COM MATCH: 706 (10.7%)
+[2026-05-05 14:30:55] [INFO] matcher — 📋 INICIANDO CLASSIFICAÇÃO TRABALHISTA
+[2026-05-05 14:30:56] [INFO] matcher — ✅ Exportado BRUTO: sem_match_trab_bruto_20260505_143018.xlsx (791 registros)
+[2026-05-05 14:30:58] [INFO] matcher — ✅ Classificação TRABALHISTA concluída
+[2026-05-05 14:30:58] [INFO] matcher — 
+============================================================
+[2026-05-05 14:30:58] [INFO] matcher — 📊 ESTATÍSTICAS — TRABALHISTA
+[2026-05-05 14:30:58] [INFO] matcher — ============================================================
+[2026-05-05 14:30:58] [INFO] matcher —    Total de registros: 791
+[2026-05-05 14:30:58] [INFO] matcher — 
+   Classificação por categoria:
+[2026-05-05 14:30:58] [INFO] matcher —       • Ação Trabalhista: 333 (42.1%)
+[2026-05-05 14:30:58] [INFO] matcher —       • Ação de Cumprimento: 205 (25.9%)
+[2026-05-05 14:30:58] [INFO] matcher —       • Recurso Ordinário: 116 (14.7%)
+[2026-05-05 14:30:58] [INFO] matcher —       • Agravo de Instrumento: 63 (8.0%)
+[2026-05-05 14:30:58] [INFO] matcher —       • Embargos de Declaração: 36 (4.6%)
+[2026-05-05 14:30:58] [INFO] matcher —       • Recurso Extraordinário: 13 (1.6%)
+[2026-05-05 14:30:58] [INFO] matcher —       • Agravo de Petição: 12 (1.5%)
+[2026-05-05 14:30:58] [INFO] matcher —       • Recurso de Revista: 6 (0.8%)
+[2026-05-05 14:30:58] [INFO] matcher —       • nan: 3 (0.4%)
+[2026-05-05 14:30:58] [INFO] matcher —       • Décio Freire: 3 (0.4%)
+[2026-05-05 14:30:58] [INFO] matcher —       • Mandado de Segurança: 1 (0.1%)
+[2026-05-05 14:30:58] [WARNING] matcher — 
+   ⚠️  3 registros SEM CATEGORIA (0.4%)
+[2026-05-05 14:30:58] [INFO] matcher — ✅ Exportado: sem_match_trab_prioridade_20260505_143018.xlsx (3 registros)
+[2026-05-05 14:30:58] [INFO] matcher — ✅ Exportado: agravo_de_instrumento_20260505_143018.xlsx (63 registros)
+[2026-05-05 14:30:58] [INFO] matcher — ✅ Exportado: agravo_de_peticao_20260505_143018.xlsx (12 registros)
+[2026-05-05 14:30:58] [INFO] matcher — ✅ Exportado: acao_trabalhista_20260505_143018.xlsx (333 registros)
+[2026-05-05 14:30:58] [INFO] matcher — ✅ Exportado: acao_de_cumprimento_20260505_143018.xlsx (205 registros)
+[2026-05-05 14:30:59] [INFO] matcher — ✅ Exportado: embargos_de_declaracao_20260505_143018.xlsx (36 registros)
+[2026-05-05 14:30:59] [INFO] matcher — ✅ Exportado: mandado_de_seguranca_20260505_143018.xlsx (1 registros)
+[2026-05-05 14:30:59] [INFO] matcher — ✅ Exportado: recurso_extraordinario_20260505_143018.xlsx (13 registros)
+[2026-05-05 14:30:59] [INFO] matcher — ✅ Exportado: recurso_ordinario_20260505_143018.xlsx (116 registros)
+[2026-05-05 14:30:59] [INFO] matcher — ✅ Exportado: recurso_de_revista_20260505_143018.xlsx (6 registros)
+[2026-05-05 14:30:59] [INFO] matcher — ✅ Exportado: sem_match_trab_todos_classificados_20260505_143018.xlsx (788 registros)
+[2026-05-05 14:30:59] [INFO] matcher — ⚠️  Exportado: sem_match_trab_sem_categoria_20260505_143018.xlsx (3 registros sem categoria)
+[2026-05-05 14:31:18] [INFO] matcher — ✅ Classificação CÍVEL concluída
+[2026-05-05 14:31:18] [INFO] matcher — 
+============================================================
+[2026-05-05 14:31:18] [INFO] matcher — 📊 ESTATÍSTICAS — CÍVEL
+[2026-05-05 14:31:18] [INFO] matcher — ============================================================
+[2026-05-05 14:31:18] [INFO] matcher —    Total de registros: 5088
+[2026-05-05 14:31:18] [INFO] matcher — 
+   Classificação por categoria:
+[2026-05-05 14:31:18] [INFO] matcher —       • nan: 1562 (30.7%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Recurso Inominado: 573 (11.3%)
+[2026-05-05 14:31:18] [INFO] matcher —       • IAC: 558 (11.0%)
+[2026-05-05 14:31:18] [INFO] matcher —       • EXCLUIDO: 439 (8.6%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Cumprimento de Sentença: 390 (7.7%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Recursos: 320 (6.3%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Agravo de Instrumento: 313 (6.2%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Agravo Interno: 148 (2.9%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Embargos de Declaração: 147 (2.9%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Impedimento/Suspeição do Juiz: 133 (2.6%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Tutela Provisória: 81 (1.6%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Assistência: 75 (1.5%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Mandado de Segurança Cível: 55 (1.1%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Embargos à Execução: 45 (0.9%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Recurso Especial: 43 (0.8%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Agravo Regimental: 34 (0.7%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Carta Precatória Cível: 33 (0.6%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Incidente de Arbitramento: 29 (0.6%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Recurso Extraordinário: 25 (0.5%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Liquidação de Sentença: 16 (0.3%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Embargos: 11 (0.2%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Oposição: 11 (0.2%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Coisa Julgada: 9 (0.2%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Incompetência Relativa: 6 (0.1%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Desconsideração da Personalidade Jurídica: 5 (0.1%)
+[2026-05-05 14:31:18] [INFO] matcher —       • IRDR: 5 (0.1%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Conflito de Competência: 4 (0.1%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Recurso Adesivo: 4 (0.1%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Litispendência: 4 (0.1%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Tutela Cautelar Antecedente: 2 (0.0%)
+[2026-05-05 14:31:18] [INFO] matcher —       • RPV: 2 (0.0%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Impugnação ao Valor da Causa: 2 (0.0%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Falsidade Documental: 1 (0.0%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Exibição de Documento ou Coisa: 1 (0.0%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Pré-executividade: 1 (0.0%)
+[2026-05-05 14:31:18] [INFO] matcher —       • Produção Antecipada de Provas: 1 (0.0%)
+[2026-05-05 14:31:18] [WARNING] matcher — 
+   ⚠️  1562 registros SEM CATEGORIA (30.7%)
+[2026-05-05 14:31:18] [INFO] matcher — 
+============================================================
+[2026-05-05 14:31:18] [INFO] matcher — 📈 DISTRIBUIÇÃO DE CONFIANÇA
+[2026-05-05 14:31:18] [INFO] matcher — ============================================================
+[2026-05-05 14:31:18] [INFO] matcher —    [  0- 20]:   1562 ( 30.7%)
+[2026-05-05 14:31:18] [INFO] matcher —    [ 20- 40]:      0 (  0.0%)
+[2026-05-05 14:31:18] [INFO] matcher —    [ 40- 60]:      0 (  0.0%)
+[2026-05-05 14:31:18] [INFO] matcher —    [ 60- 80]:     14 (  0.3%)
+[2026-05-05 14:31:18] [INFO] matcher —    [ 80-100]:    815 ( 16.0%)
+[2026-05-05 14:31:18] [INFO] matcher —    [ 90-100]:   3282 ( 64.5%)
+[2026-05-05 14:31:18] [INFO] matcher —    [100-100]:   2697 ( 53.0%)
+[2026-05-05 14:31:21] [INFO] matcher — ✅ Exportado: sem_match_civel_20260505_143018.xlsx (5088 registros)
+[2026-05-05 14:31:23] [INFO] matcher — ✅ Exportado: sem_match_civel_prioridade_20260505_143018.xlsx (4354 registros prioritários)
+[2026-05-05 14:31:23] [INFO] matcher — ✅ Exportado: agravo_interno_20260505_143018.xlsx (148 registros)
+[2026-05-05 14:31:23] [INFO] matcher — ✅ Exportado: agravo_regimental_20260505_143018.xlsx (34 registros)
+[2026-05-05 14:31:23] [INFO] matcher — ✅ Exportado: agravo_de_instrumento_20260505_143018.xlsx (313 registros)
+[2026-05-05 14:31:23] [INFO] matcher — ✅ Exportado: assistência_20260505_143018.xlsx (75 registros)
+[2026-05-05 14:31:23] [INFO] matcher — ✅ Exportado: carta_precatoria_civel_20260505_143018.xlsx (33 registros)
+[2026-05-05 14:31:23] [INFO] matcher — ✅ Exportado: coisa_julgada_20260505_143018.xlsx (9 registros)
+[2026-05-05 14:31:23] [INFO] matcher — ✅ Exportado: conflito_de_competência_20260505_143018.xlsx (4 registros)
+[2026-05-05 14:31:24] [INFO] matcher — ✅ Exportado: cumprimento_de_sentenca_20260505_143018.xlsx (390 registros)
+[2026-05-05 14:31:24] [INFO] matcher — ✅ Exportado: desconsideracao_da_personalidade_juridica_20260505_143018.xlsx (5 registros)
+[2026-05-05 14:31:24] [INFO] matcher — ✅ Exportado: excluido_20260505_143018.xlsx (439 registros)
+[2026-05-05 14:31:24] [INFO] matcher — ✅ Exportado: embargos_20260505_143018.xlsx (11 registros)
+[2026-05-05 14:31:24] [INFO] matcher — ✅ Exportado: embargos_de_declaracao_20260505_143018.xlsx (147 registros)
+[2026-05-05 14:31:24] [INFO] matcher — ✅ Exportado: embargos_à_execucao_20260505_143018.xlsx (45 registros)
+[2026-05-05 14:31:24] [INFO] matcher — ✅ Exportado: exibicao_de_documento_ou_coisa_20260505_143018.xlsx (1 registros)
+[2026-05-05 14:31:24] [INFO] matcher — ✅ Exportado: falsidade_documental_20260505_143018.xlsx (1 registros)
+[2026-05-05 14:31:25] [INFO] matcher — ✅ Exportado: iac_20260505_143018.xlsx (558 registros)
+[2026-05-05 14:31:25] [INFO] matcher — ✅ Exportado: irdr_20260505_143018.xlsx (5 registros)
+[2026-05-05 14:31:25] [INFO] matcher — ✅ Exportado: impedimentosuspeicao_do_juiz_20260505_143018.xlsx (133 registros)
+[2026-05-05 14:31:25] [INFO] matcher — ✅ Exportado: impugnacao_ao_valor_da_causa_20260505_143018.xlsx (2 registros)
+[2026-05-05 14:31:25] [INFO] matcher — ✅ Exportado: incidente_de_arbitramento_20260505_143018.xlsx (29 registros)
+[2026-05-05 14:31:25] [INFO] matcher — ✅ Exportado: incompetência_relativa_20260505_143018.xlsx (6 registros)
+[2026-05-05 14:31:25] [INFO] matcher — ✅ Exportado: liquidacao_de_sentenca_20260505_143018.xlsx (16 registros)
+[2026-05-05 14:31:25] [INFO] matcher — ✅ Exportado: litispendência_20260505_143018.xlsx (4 registros)
+[2026-05-05 14:31:25] [INFO] matcher — ✅ Exportado: mandado_de_seguranca_civel_20260505_143018.xlsx (55 registros)
+[2026-05-05 14:31:25] [INFO] matcher — ✅ Exportado: oposicao_20260505_143018.xlsx (11 registros)
+[2026-05-05 14:31:25] [INFO] matcher — ✅ Exportado: producao_antecipada_de_provas_20260505_143018.xlsx (1 registros)
+[2026-05-05 14:31:25] [INFO] matcher — ✅ Exportado: pre_executividade_20260505_143018.xlsx (1 registros)
+[2026-05-05 14:31:25] [INFO] matcher — ✅ Exportado: rpv_20260505_143018.xlsx (2 registros)
+[2026-05-05 14:31:25] [INFO] matcher — ✅ Exportado: recurso_adesivo_20260505_143018.xlsx (4 registros)
+[2026-05-05 14:31:25] [INFO] matcher — ✅ Exportado: recurso_especial_20260505_143018.xlsx (43 registros)
+[2026-05-05 14:31:25] [INFO] matcher — ✅ Exportado: recurso_extraordinario_20260505_143018.xlsx (25 registros)
+[2026-05-05 14:31:26] [INFO] matcher — ✅ Exportado: recurso_inominado_20260505_143018.xlsx (573 registros)
+[2026-05-05 14:31:26] [INFO] matcher — ✅ Exportado: recursos_20260505_143018.xlsx (320 registros)
+[2026-05-05 14:31:26] [INFO] matcher — ✅ Exportado: tutela_cautelar_antecedente_20260505_143018.xlsx (2 registros)
+[2026-05-05 14:31:26] [INFO] matcher — ✅ Exportado: tutela_provisoria_20260505_143018.xlsx (81 registros)
+[2026-05-05 14:31:27] [INFO] matcher — ⚠️  Exportado: sem_match_civel_sem_categoria_20260505_143018.xlsx (1562 registros sem categoria)
+[2026-05-05 14:31:27] [INFO] matcher — ✅ Exportado: com_match_descartados_20260505_143018.xlsx (706 registros descartados)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (95163), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (39774), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (87984), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (87076), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (33528), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (33130), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (52431), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (46283), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (68061), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (43960), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (99448), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (36105), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (35231), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (36443), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (84289), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (70079), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (57893), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (42910), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (65585), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (41874), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (117285), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (130828), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (33641), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (94586), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (74274), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (73801), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (73766), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (73898), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (74109), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (73697), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (73820), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (74238), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (73846), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (73842), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (73930), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (73608), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (73836), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (73757), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (73664), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (73826), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (62539), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (69484), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (61670), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (91331), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (45919), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (38566), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (42400), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (42473), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (37256), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (37428), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (37665), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (36693), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (35081), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (73979), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (36152), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (32812), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (53175), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (37225), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (36291), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (56923), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (44886), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (33315), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (107830), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (45960), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (126889), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (42248), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (109066), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (44365), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (44447), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (43416), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (51216), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (99067), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (60679), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (42633), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (42726), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (33481), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (61196), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (37491), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (33900), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (42243), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (53766), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (49069), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (46609), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (64842), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (49019), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (54613), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (36805), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (33174), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (49705), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (48428), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (47988), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (89682), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (46887), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (46990), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (70697), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (66843), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (56393), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (73088), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (46184), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (44894), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (42428), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (40756), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (53197), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (41375), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (45520), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (48039), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (42273), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (52137), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (74052), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (36119), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (61374), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (63898), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (45273), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (40719), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (45868), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (73104), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (61875), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (43777), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (92598), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (45434), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (42016), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (49905), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (56129), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (88032), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (88674), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (88052), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (66313), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (66293), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (66278), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (66410), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (66274), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (66272), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (66266), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (66368), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (66242), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (67148), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (67174), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (66298), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (66256), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (67160), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (67132), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (66292), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (66277), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (67138), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (66294), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (67238), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (67154), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (66239), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (66297), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (66327), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (66283), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (66273), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (66265), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (66287), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (58185), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (50246), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (66268), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (66333), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (58363), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (66308), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (66271), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (66302), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (65962), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (66258), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (37024), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (50929), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (35456), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (43318), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (81134), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (83127), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (40434), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (33023), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (59207), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (52013), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (83330), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (84062), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (35511), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (54909), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (39194), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (35599), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (53089), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (58661), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (51717), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (116577), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (44090), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (37231), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (68654), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (52190), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (47149), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (84377), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (34471), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (61518), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (34355), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (58494), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (38277), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (62124), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+C:\Users\lucas.paim\Desktop\processo_triage\reporting\summary.py:46: UserWarning: Cell contents too long (43633), truncated to 32767 characters
+  civel_export[cols].to_excel(writer, sheet_name=sanitize_sheet_name("Cíveis Brutos"), index=False)
+[2026-05-05 14:31:30] [INFO] matcher — ✅ Resumo exportado: resumo_20260505_143018.xlsx
+[2026-05-05 14:31:30] [INFO] matcher — 🎉 PROCESSO FINALIZADO COM SUCESSO
+[2026-05-05 14:31:30] [INFO] __main__ — ✅ Processo concluído com sucesso!
+[RESULTADO] Procurando arquivos .xlsx na área operacional de output/...
+[RESULTADO] Total de .xlsx encontrados na área operacional: 53
+[RESULTADO] Novos .xlsx gerados nesta execução: 53
+[RESULTADO]   • Civel\prioridade\sem_match_civel_prioridade_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\agravo_de_instrumento_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\agravo_interno_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\agravo_regimental_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\assistência_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\carta_precatoria_civel_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\coisa_julgada_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\conflito_de_competência_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\cumprimento_de_sentenca_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\desconsideracao_da_personalidade_juridica_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\embargos_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\embargos_de_declaracao_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\embargos_à_execucao_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\excluido_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\exibicao_de_documento_ou_coisa_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\falsidade_documental_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\iac_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\impedimentosuspeicao_do_juiz_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\impugnacao_ao_valor_da_causa_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\incidente_de_arbitramento_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\incompetência_relativa_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\irdr_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\liquidacao_de_sentenca_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\litispendência_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\mandado_de_seguranca_civel_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\oposicao_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\pre_executividade_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\producao_antecipada_de_provas_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\recurso_adesivo_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\recurso_especial_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\recurso_extraordinario_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\recurso_inominado_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\recursos_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\rpv_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\tutela_cautelar_antecedente_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_categorias\tutela_provisoria_20260505_143018.xlsx
+[RESULTADO]   • Civel\sem_match_civel_sem_categoria_20260505_143018.xlsx
+[RESULTADO]   • com_match_descartados_20260505_143018.xlsx
+[RESULTADO]   • resumo_20260505_143018.xlsx
+[RESULTADO]   • Trabalhista\sem_match_trab_bruto_20260505_143018.xlsx
+[RESULTADO]   • Trabalhista\sem_match_trab_categorias\acao_de_cumprimento_20260505_143018.xlsx
+[RESULTADO]   • Trabalhista\sem_match_trab_categorias\acao_trabalhista_20260505_143018.xlsx
+[RESULTADO]   • Trabalhista\sem_match_trab_categorias\agravo_de_instrumento_20260505_143018.xlsx
+[RESULTADO]   • Trabalhista\sem_match_trab_categorias\agravo_de_peticao_20260505_143018.xlsx
+[RESULTADO]   • Trabalhista\sem_match_trab_categorias\embargos_de_declaracao_20260505_143018.xlsx
+[RESULTADO]   • Trabalhista\sem_match_trab_categorias\mandado_de_seguranca_20260505_143018.xlsx
+[RESULTADO]   • Trabalhista\sem_match_trab_categorias\recurso_de_revista_20260505_143018.xlsx
+[RESULTADO]   • Trabalhista\sem_match_trab_categorias\recurso_extraordinario_20260505_143018.xlsx
+[RESULTADO]   • Trabalhista\sem_match_trab_categorias\recurso_ordinario_20260505_143018.xlsx
+[RESULTADO]   • Trabalhista\sem_match_trab_categorias\sem_match_trab_todos_classificados_20260505_143018.xlsx
+[RESULTADO]   • Trabalhista\sem_match_trab_prioridade_20260505_143018.xlsx
+[RESULTADO]   • Trabalhista\sem_match_trab_sem_categoria_20260505_143018.xlsx
+[OUTPUT] ✓ Snapshot da execução salvo em: C:\Users\lucas.paim\Desktop\processo_triage\output\runs\20260505_142851
+[OUTPUT] ✓ Pasta latest atualizada em: C:\Users\lucas.paim\Desktop\processo_triage\output\latest
+[AUDITORIA] Lido para consolidado 'sem_match': sem_match_civel_20260505_143018.xlsx (5088 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': sem_match_civel_sem_categoria_20260505_143018.xlsx (1562 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': sem_match_trab_bruto_20260505_143018.xlsx (791 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': sem_match_trab_prioridade_20260505_143018.xlsx (3 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': sem_match_trab_sem_categoria_20260505_143018.xlsx (3 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': acao_de_cumprimento_20260505_143018.xlsx (205 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': acao_trabalhista_20260505_143018.xlsx (333 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': agravo_de_instrumento_20260505_143018.xlsx (63 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': agravo_de_peticao_20260505_143018.xlsx (12 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': embargos_de_declaracao_20260505_143018.xlsx (36 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': mandado_de_seguranca_20260505_143018.xlsx (1 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': recurso_de_revista_20260505_143018.xlsx (6 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': recurso_extraordinario_20260505_143018.xlsx (13 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': recurso_ordinario_20260505_143018.xlsx (116 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': sem_match_trab_todos_classificados_20260505_143018.xlsx (788 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': sem_match_civel_prioridade_20260505_143018.xlsx (4354 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': agravo_de_instrumento_20260505_143018.xlsx (313 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': agravo_interno_20260505_143018.xlsx (148 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': agravo_regimental_20260505_143018.xlsx (34 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': assistência_20260505_143018.xlsx (75 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': carta_precatoria_civel_20260505_143018.xlsx (33 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': coisa_julgada_20260505_143018.xlsx (9 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': conflito_de_competência_20260505_143018.xlsx (4 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': cumprimento_de_sentenca_20260505_143018.xlsx (390 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': desconsideracao_da_personalidade_juridica_20260505_143018.xlsx (5 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': embargos_20260505_143018.xlsx (11 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': embargos_de_declaracao_20260505_143018.xlsx (147 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': embargos_à_execucao_20260505_143018.xlsx (45 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': excluido_20260505_143018.xlsx (439 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': exibicao_de_documento_ou_coisa_20260505_143018.xlsx (1 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': falsidade_documental_20260505_143018.xlsx (1 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': iac_20260505_143018.xlsx (558 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': impedimentosuspeicao_do_juiz_20260505_143018.xlsx (133 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': impugnacao_ao_valor_da_causa_20260505_143018.xlsx (2 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': incidente_de_arbitramento_20260505_143018.xlsx (29 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': incompetência_relativa_20260505_143018.xlsx (6 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': irdr_20260505_143018.xlsx (5 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': liquidacao_de_sentenca_20260505_143018.xlsx (16 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': litispendência_20260505_143018.xlsx (4 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': mandado_de_seguranca_civel_20260505_143018.xlsx (55 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': oposicao_20260505_143018.xlsx (11 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': pre_executividade_20260505_143018.xlsx (1 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': producao_antecipada_de_provas_20260505_143018.xlsx (1 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': recursos_20260505_143018.xlsx (320 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': recurso_adesivo_20260505_143018.xlsx (4 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': recurso_especial_20260505_143018.xlsx (43 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': recurso_extraordinario_20260505_143018.xlsx (25 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': recurso_inominado_20260505_143018.xlsx (573 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': rpv_20260505_143018.xlsx (2 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': tutela_cautelar_antecedente_20260505_143018.xlsx (2 linhas)
+[AUDITORIA] Lido para consolidado 'sem_match': tutela_provisoria_20260505_143018.xlsx (81 linhas)
+[AUDITORIA] ✓ Consolidado 'sem_match' gerado: auditoria_consolidado_sem_match.xlsx (16900 linhas)
+[AUDITORIA] Grupo 'numero_puro' sem arquivos para consolidar.
+[AUDITORIA] Grupo 'outro' sem arquivos para consolidar.
+[AUDITORIA] ✓ Resumo Excel dos consolidados gerado: auditoria_resumo_consolidados.xlsx
+[HISTORICO] ✓ Histórico atualizado em: C:\Users\lucas.paim\Desktop\processo_triage\output\_historico_execucoes\historico_execucoes.csv
+[HISTORICO] ✓ Histórico Excel sincronizado em: C:\Users\lucas.paim\Desktop\processo_triage\output\_historico_execucoes\historico_execucoes.xlsx
+[COMPARATIVO] ✓ Comparativo com execução anterior salvo em: comparativo_execucao_anterior.json
+[COMPARATIVO-MEDIA] ✓ Comparativo com média das últimas execuções salvo em: comparativo_media_ultimas_execucoes.json | critério: ultimas_execucoes_com_sucesso
+[ALERTAS] ⚠️ 3 alerta(s) de regressão salvo(s) em: alertas_execucao.json
+[RESULTADO] ✓ Processamento concluído com sucesso!
+[AUDITORIA] Índice, consolidados, resumo Excel, histórico, comparativos e alertas salvos em: C:\Users\lucas.paim\Desktop\processo_triage\output\runs\20260505_142851\_auditoria
+[RESULTADO] Pasta da execução atual: C:\Users\lucas.paim\Desktop\processo_triage\output\runs\20260505_142851
+[RESULTADO] Pasta latest atualizada: C:\Users\lucas.paim\Desktop\processo_triage\output\latest
+[AUDITORIA] ✓ Resumo Markdown da execução gerado: resumo_execucao.md

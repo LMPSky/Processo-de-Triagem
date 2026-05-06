@@ -1,0 +1,92 @@
+{
+  "Recursos": [
+    "recurso",
+    "agravo",
+    "mandado de seguranca civel",
+    "mandado de segurança cível",
+    "carta testemunhavel",
+    "carta testemunhável"
+  ],
+  "Embargos": [
+    "embargos"
+  ],
+  "Execução/Cumprimento": [
+    "cumprimento de sentença",
+    "cumprimento de sentenca",
+    "liquidação de sentença",
+    "liquidacao de sentença",
+    "pré-executividade",
+    "pre-executividade",
+    "pre executividade"
+  ],
+  "Incidentes Processuais Comuns": [
+    "desconsideracao da personalidade juridica",
+    "desconsideração da personalidade jurídica",
+    "falsidade documental",
+    "incidente de falsidade",
+    "incompetencia relativa",
+    "incompetência relativa",
+    "suspeicao do juiz",
+    "suspeição do juiz",
+    "impedimento",
+    "irdr",
+    "resolução de demandas repetitivas",
+    "iac",
+    "assuncao de competencia",
+    "assunção de competência",
+    "uniformizacao de jurisprudencia",
+    "uniformização de jurisprudência",
+    "arguicao de inconstitucionalidade",
+    "arguição de inconstitucionalidade",
+    "coisa julgada",
+    "litispendencia",
+    "litispendência",
+    "impugnacao ao valor da causa",
+    "impugnação ao valor da causa",
+    "conflito de competencia",
+    "conflito de competência"
+  ],
+  "Intervenção de Terceiros": [
+    "assistencia",
+    "assistência",
+    "oposição",
+    "oposicao",
+    "denunciacao da lide",
+    "denunciação da lide",
+    "chamamento ao processo"
+  ],
+  "Provas/Documentos": [
+    "exibição de documento ou coisa",
+    "exibicao de documento ou coisa",
+    "produção antecipada de provas",
+    "producao antecipada de provas",
+    "arbitramento",
+    "incidente de arbitramento"
+  ],
+  "Instrumentos Auxiliares": [
+    "carta precatoria",
+    "carta precatória",
+    "carta rogatória",
+    "carta rogatoria",
+    "carta de ordem",
+    "carta arbitral",
+    "carta de sentença",
+    "carta de sentenca",
+    "precatório judicial",
+    "precatorio judicial",
+    "requisição de pequeno valor",
+    "requisicao de pequeno valor",
+    "rpv"
+  ],
+  "Tutelas": [
+    "tutela provisoria",
+    "tutela provisória",
+    "tutela de urgencia",
+    "tutela de urgência",
+    "tutela de evidencia",
+    "tutela de evidência",
+    "tutela cautelar antecedente",
+    "arresto",
+    "sequestro"
+  ]
+}

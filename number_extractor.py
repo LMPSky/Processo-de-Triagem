@@ -1,4 +1,3 @@
-"""Extração e normalização de números CNJ, STJ e outros identificadores."""
 from __future__ import annotations
 
 import re
@@ -16,8 +15,12 @@ _STJ_NUMERO_RE = re.compile(r"Nº\s*(\d{5,8})")
 # Número puro (só dígitos, mínimo 5 para evitar falsos positivos)
 _DIGITS_ONLY_RE = re.compile(r"^\d{5,}$")
 
+
 def extract_all_numbers(raw: str) -> set[str]:
-    """Extrai todos os identificadores possíveis de uma string.\n    Retorna um set de strings normalizadas (sem espaços, sem pontuação desnecessária)."""
+    """
+    Extrai todos os identificadores possíveis de uma string.
+    Retorna um set de strings normalizadas (sem espaços, sem pontuação desnecessária).
+    """
     if not raw or not raw.strip():
         return set()
 
@@ -49,6 +52,7 @@ def extract_all_numbers(raw: str) -> set[str]:
         results.add(raw)
 
     return results
+
 
 def normalize_number(raw: str) -> str:
     """Remove pontuação e espaços para comparação."""

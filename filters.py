@@ -1,4 +1,4 @@
-"""Filtros: duplicatas, classificação de número, UF, ramo, dígito verificador e idade."""
+# Filtros: duplicatas, classificação de número, UF, ramo, dígito verificador e idade.
 from __future__ import annotations
 
 import re
@@ -29,6 +29,13 @@ _SEM_EXPEDIENTE_TERMS = [
 
 
 def classify_number(value: str) -> str:
+    """
+    Classifica o tipo de um identificador numérico.
+
+    Returns:
+        Uma das strings: 'vazio', 'sem_expediente', 'cnj', 'stj',
+        'numero_puro', 'texto', 'outro'.
+    """
     if not value or not value.strip():
         return "vazio"
 
@@ -59,10 +66,55 @@ def classify_number(value: str) -> str:
 
 
 # ══════════════════════════════════════════════════════════
+# Filtro 0: Validar CNJ (novo)
+# ══════════════════════════════════════════════════════════
+
+def is_valid_cnj(cnj: str) -> bool:
+    """
+    Verifica se o CNJ é válido e não é um número genérico/administrativo.
+    
+    Filtra:
+    - CNJs vazios ou muito curtos
+    - Números genéricos/administrativos
+    - Números sem dígitos
+    """
+    if not cnj:
+        return False
+    
+    cnj_norm = str(cnj).strip().lower()
+    
+    # CNJs genéricos/administrativos que devem ser filtrados
+    INVALID_CNJS = [
+        "02/2026",           # Administrativo (190 duplicatas!)
+        "004/2020",          # Administrativo
+        "47/2026",           # Administrativo
+        "0000/2026",         # Genérico
+        "9999/2026",         # Genérico
+        "00/0000",           # Genérico
+    ]
+    
+    # Verificar contra lista
+    if cnj_norm in INVALID_CNJS:
+        return False
+    
+    # CNJ válido deve ter pelo menos 15 caracteres
+    # Formato: 0000000-00.0000.0.00.0000
+    if len(cnj_norm) < 15:
+        return False
+    
+    # CNJ válido tem dígitos
+    if not any(c.isdigit() for c in cnj_norm):
+        return False
+    
+    return True
+
+
+# ══════════════════════════════════════════════════════════
 # Filtro 1: Remover duplicatas
 # ══════════════════════════════════════════════════════════
 
 def remove_duplicates(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Remove linhas duplicadas por CNJ, mantendo a primeira ocorrência."""
     is_dup = df.duplicated(subset=["cnj"], keep="first")
 
     unique = df[~is_dup].copy()
@@ -78,10 +130,42 @@ def remove_duplicates(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
 
 
 # ══════════════════════════════════════════════════════════
+# Filtro 1.5: Remover CNJs inválidos (novo)
+# ══════════════════════════════════════════════════════════
+
+def remove_invalid_cnjs(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """
+    Remove linhas com CNJs genéricos/administrativos.
+    
+    Returns:
+        (DataFrame válido, DataFrame com CNJs inválidos)
+    """
+    valid_mask = df["cnj"].apply(is_valid_cnj)
+    
+    valid = df[valid_mask].copy()
+    invalid = df[~valid_mask].copy()
+    
+    if len(invalid) > 0:
+        print(f"   🚫 CNJs inválidos removidos: {len(invalid)} linhas")
+        print(f"   ✅ Restaram: {len(valid)} linhas com CNJ válido")
+        
+        # Mostrar exemplos
+        invalid_samples = invalid["cnj"].unique()[:5]
+        print(f"   Exemplos de CNJs inválidos:")
+        for cnj in invalid_samples:
+            print(f"      • {cnj}")
+    else:
+        print(f"   ✅ Nenhum CNJ inválido encontrado")
+    
+    return valid, invalid
+
+
+# ══════════════════════════════════════════════════════════
 # Filtro 2: Classificar tipo de número
 # ══════════════════════════════════════════════════════════
 
 def add_number_classification(df: pd.DataFrame) -> pd.DataFrame:
+    """Adiciona coluna 'tipo_numero' com a classificação de cada CNJ."""
     df = df.copy()
     df["tipo_numero"] = df["cnj"].apply(classify_number)
 
@@ -98,6 +182,7 @@ def add_number_classification(df: pd.DataFrame) -> pd.DataFrame:
 # ══════════════════════════════════════════════════════════
 
 def enrich_with_source_info(df: pd.DataFrame) -> pd.DataFrame:
+    """Enriquece o DataFrame com informações sobre presença em múltiplas fontes."""
     df = df.copy()
 
     source_info = (
@@ -125,7 +210,7 @@ def enrich_with_source_info(df: pd.DataFrame) -> pd.DataFrame:
 
 # ══════════════════════════════════════════════════════════
 # Filtro 4: Extrair UF e Ramo da Justiça do CNJ
-# ══════════════════════════════════════════════════════════
+# ═══════���══════════════════════════════════════════════════
 
 _RAMOS_JUSTICA = {
     "1": "STF",
@@ -139,13 +224,17 @@ _RAMOS_JUSTICA = {
     "9": "Justiça Militar Estadual",
 }
 
-_UF_POR_TRIBUNAL = {
-    # Justiça Federal (4)
-    "01": "DF", "02": "RJ/ES", "03": "SP/MS", "04": "RS/SC/PR", "05": "PE/CE/AL/SE/PB/RN",
+# Melhoria #8: Separado em dois dicionários para evitar sobrescrita de chaves
+_UF_FEDERAL = {
+    "01": "DF",
+    "02": "RJ/ES",
+    "03": "SP/MS",
+    "04": "RS/SC/PR",
+    "05": "PE/CE/AL/SE/PB/RN",
     "06": "MG",
-    # Justiça do Trabalho (5)
-    # 01-24 por região
-    # Justiça Estadual (8)
+}
+
+_UF_ESTADUAL = {
     "01": "AC", "02": "AL", "03": "AP", "04": "AM", "05": "BA",
     "06": "CE", "07": "DF", "08": "ES", "09": "GO", "10": "MA",
     "11": "MT", "12": "MS", "13": "MG", "14": "PA", "15": "PB",
@@ -173,14 +262,14 @@ def _parse_cnj(cnj: str) -> dict[str, str]:
 
     ramo = _RAMOS_JUSTICA.get(justica, f"Desconhecido ({justica})")
 
-    # UF depende do ramo
+    # UF depende do ramo — cada ramo usa seu próprio dicionário
     uf = "N/A"
     if justica == "8":  # Estadual
-        uf = _UF_POR_TRIBUNAL.get(tribunal, f"UF? ({tribunal})")
+        uf = _UF_ESTADUAL.get(tribunal, f"UF? ({tribunal})")
     elif justica == "5":  # Trabalho
         uf = f"TRT-{tribunal}"
     elif justica == "4":  # Federal
-        uf = _UF_POR_TRIBUNAL.get(tribunal, f"TRF-{tribunal}")
+        uf = _UF_FEDERAL.get(tribunal, f"TRF-{tribunal}")
 
     return {
         "ano_processo": ano,
@@ -192,9 +281,7 @@ def _parse_cnj(cnj: str) -> dict[str, str]:
 
 
 def add_cnj_details(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Para processos com tipo_numero='cnj', extrai ano, ramo da justiça, UF.
-    """
+    """Para processos com tipo_numero='cnj', extrai ano, ramo da justiça, UF."""
     df = df.copy()
 
     # Inicializa colunas
@@ -237,10 +324,9 @@ def add_cnj_details(df: pd.DataFrame) -> pd.DataFrame:
 
 def _validate_cnj_check_digit(cnj: str) -> bool:
     """
-    Valida o dígito verificador do CNJ.
+    Valida o dígito verificador do CNJ conforme Resolução 65.
     Formato: NNNNNNN-DD.AAAA.J.TT.OOOO
-    Fórmula: resto = (NNNNNNN * 10^13 + AAAA * 10^9 + J * 10^8 + TT * 10^6 + OOOO * 10^2 + DD) mod 97
-    Se resto == 1, é válido.
+    Monta NNNNNNNAAAAJTTOOOODD e verifica se mod 97 == 1.
     """
     m = _CNJ_PARSE_RE.match(cnj.strip())
     if not m:
@@ -249,24 +335,8 @@ def _validate_cnj_check_digit(cnj: str) -> bool:
     numero, digito, ano, justica, tribunal, origem = m.groups()
 
     try:
-        n = int(numero)
-        d = int(digito)
-        a = int(ano)
-        j = int(justica)
-        t = int(tribunal)
-        o = int(origem)
-
-        # Cálculo conforme Resolução 65 do CNJ
-        remainder = (n % 97) * (10**14 % 97) % 97
-        remainder = (remainder + a * (10**10 % 97) % 97 + j * (10**9 % 97) % 97) % 97
-        remainder = (remainder + t * (10**7 % 97) % 97 + o * (10**3 % 97) % 97 + d) % 97
-
-        # Método alternativo mais simples e confiável
-        # Monta o número completo sem o dígito: NNNNNNNAAAAJTTOOOO
-        # e verifica se NNNNNNNAAAAJTTOOOODD mod 97 == 1
         full_number = f"{numero}{ano}{justica}{tribunal}{origem}{digito}"
         return int(full_number) % 97 == 1
-
     except (ValueError, ZeroDivisionError):
         return False
 

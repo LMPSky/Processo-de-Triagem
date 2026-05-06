@@ -1,0 +1,145 @@
+[2026-05-06 13:50:04] [INFO] matcher — 🚀 INICIANDO PROCESSO DE TRIAGEM
+[2026-05-06 13:50:22] [INFO] matcher — Legal One: 149852 linhas lidas
+[2026-05-06 13:50:37] [INFO] matcher — Legal One: 269721 identificadores no pool
+[2026-05-06 13:50:41] [INFO] matcher — Bases externas: 7821 linhas lidas (antes de dedup)
+[2026-05-06 13:50:41] [INFO] matcher — Duplicatas removidas: 1937
+[2026-05-06 13:50:41] [INFO] matcher — Matching: 5204 SEM MATCH, 680 COM MATCH
+[2026-05-06 13:50:42] [INFO] matcher — 
+[2026-05-06 13:50:42] [INFO] matcher — ============================================================
+[2026-05-06 13:50:42] [INFO] matcher — RESULTADOS DO MATCHING
+[2026-05-06 13:50:42] [INFO] matcher — ============================================================
+[2026-05-06 13:50:42] [INFO] matcher —    Total processado: 5884
+[2026-05-06 13:50:42] [INFO] matcher —    Trabalhista sem match: 685 (11.6%)
+[2026-05-06 13:50:42] [INFO] matcher —    Civel sem match: 4519 (76.8%)
+[2026-05-06 13:50:42] [INFO] matcher —    COM MATCH: 680 (11.6%)
+[2026-05-06 13:50:42] [INFO] matcher — 📋 INICIANDO CLASSIFICAÇÃO TRABALHISTA
+[2026-05-06 13:50:42] [INFO] matcher — ✅ Exportado BRUTO: sem_match_trab_bruto_20260506_135004.xlsx (685 registros)
+[2026-05-06 13:50:44] [INFO] matcher — ✅ Classificação TRABALHISTA concluída
+[2026-05-06 13:50:44] [INFO] matcher — 
+============================================================
+[2026-05-06 13:50:44] [INFO] matcher — 📊 ESTATÍSTICAS — TRABALHISTA
+[2026-05-06 13:50:44] [INFO] matcher — ============================================================
+[2026-05-06 13:50:44] [INFO] matcher —    Total de registros: 685
+[2026-05-06 13:50:44] [INFO] matcher — 
+   Classificação por categoria:
+[2026-05-06 13:50:44] [INFO] matcher —       • Ação Trabalhista: 345 (50.4%)
+[2026-05-06 13:50:44] [INFO] matcher —       • Ação de Cumprimento: 178 (26.0%)
+[2026-05-06 13:50:44] [INFO] matcher —       • Recurso Ordinário: 73 (10.7%)
+[2026-05-06 13:50:44] [INFO] matcher —       • Agravo de Instrumento: 45 (6.6%)
+[2026-05-06 13:50:44] [INFO] matcher —       • Embargos de Declaração: 21 (3.1%)
+[2026-05-06 13:50:44] [INFO] matcher —       • Agravo de Petição: 18 (2.6%)
+[2026-05-06 13:50:44] [INFO] matcher —       • Recurso de Revista: 2 (0.3%)
+[2026-05-06 13:50:44] [INFO] matcher —       • Ação Rescisória: 2 (0.3%)
+[2026-05-06 13:50:44] [INFO] matcher —       • Décio Freire: 1 (0.1%)
+[2026-05-06 13:50:44] [INFO] matcher — ✅ Exportado: sem_match_trab_prioridade_20260506_135004.xlsx (1 registros)
+[2026-05-06 13:50:44] [INFO] matcher — ✅ Exportado: agravo_de_instrumento_20260506_135004.xlsx (45 registros)
+[2026-05-06 13:50:44] [INFO] matcher — ✅ Exportado: agravo_de_peticao_20260506_135004.xlsx (18 registros)
+[2026-05-06 13:50:44] [INFO] matcher — ✅ Exportado: acao_rescisoria_20260506_135004.xlsx (2 registros)
+[2026-05-06 13:50:44] [INFO] matcher — ✅ Exportado: acao_trabalhista_20260506_135004.xlsx (345 registros)
+[2026-05-06 13:50:44] [INFO] matcher — ✅ Exportado: acao_de_cumprimento_20260506_135004.xlsx (178 registros)
+[2026-05-06 13:50:44] [INFO] matcher — ✅ Exportado: embargos_de_declaracao_20260506_135004.xlsx (21 registros)
+[2026-05-06 13:50:44] [INFO] matcher — ✅ Exportado: recurso_ordinario_20260506_135004.xlsx (73 registros)
+[2026-05-06 13:50:44] [INFO] matcher — ✅ Exportado: recurso_de_revista_20260506_135004.xlsx (2 registros)
+[2026-05-06 13:50:45] [INFO] matcher — ✅ Exportado: sem_match_trab_todos_classificados_20260506_135004.xlsx (685 registros)
+[2026-05-06 13:51:02] [INFO] matcher — ✅ Classificação CÍVEL concluída
+[2026-05-06 13:51:02] [INFO] matcher — 
+============================================================
+[2026-05-06 13:51:02] [INFO] matcher — 📊 ESTATÍSTICAS — CÍVEL
+[2026-05-06 13:51:02] [INFO] matcher — ============================================================
+[2026-05-06 13:51:02] [INFO] matcher —    Total de registros: 4519
+[2026-05-06 13:51:02] [INFO] matcher — 
+   Classificação por categoria:
+[2026-05-06 13:51:02] [INFO] matcher —       • nan: 1451 (32.1%)
+[2026-05-06 13:51:02] [INFO] matcher —       • EXCLUIDO: 571 (12.6%)
+[2026-05-06 13:51:02] [INFO] matcher —       • IAC: 571 (12.6%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Cumprimento de Sentença: 437 (9.7%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Agravo de Instrumento: 299 (6.6%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Recurso Inominado: 258 (5.7%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Recursos: 231 (5.1%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Embargos de Declaração: 128 (2.8%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Agravo Interno: 117 (2.6%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Tutela Provisória: 70 (1.5%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Recurso Especial: 50 (1.1%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Impedimento/Suspeição do Juiz: 46 (1.0%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Agravo Regimental: 44 (1.0%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Mandado de Segurança Cível: 41 (0.9%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Carta Precatória Cível: 33 (0.7%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Assistência: 31 (0.7%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Embargos à Execução: 23 (0.5%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Recurso Extraordinário: 15 (0.3%)
+[2026-05-06 13:51:02] [INFO] matcher —       • IRDR: 13 (0.3%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Incidente de Arbitramento: 12 (0.3%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Oposição: 11 (0.2%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Embargos: 10 (0.2%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Conflito de Competência: 9 (0.2%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Coisa Julgada: 8 (0.2%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Liquidação de Sentença: 6 (0.1%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Tutela Cautelar Antecedente: 5 (0.1%)
+[2026-05-06 13:51:02] [INFO] matcher —       • RPV: 5 (0.1%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Recurso Adesivo: 5 (0.1%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Produção Antecipada de Provas: 4 (0.1%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Litispendência: 3 (0.1%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Arresto ou Sequestro: 2 (0.0%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Incompetência Relativa: 2 (0.0%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Embargos de Divergência: 2 (0.0%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Impugnação ao Valor da Causa: 2 (0.0%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Chamamento ao Processo: 1 (0.0%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Exibição de Documento ou Coisa: 1 (0.0%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Intervenção de Terceiros: 1 (0.0%)
+[2026-05-06 13:51:02] [INFO] matcher —       • Carta de Sentença: 1 (0.0%)
+[2026-05-06 13:51:02] [WARNING] matcher — 
+   ⚠️  1451 registros SEM CATEGORIA (32.1%)
+[2026-05-06 13:51:02] [INFO] matcher — 
+============================================================
+[2026-05-06 13:51:02] [INFO] matcher — 📈 DISTRIBUIÇÃO DE CONFIANÇA
+[2026-05-06 13:51:02] [INFO] matcher — ============================================================
+[2026-05-06 13:51:02] [INFO] matcher —    [  0- 20]:   1451 ( 32.1%)
+[2026-05-06 13:51:02] [INFO] matcher —    [ 20- 40]:      0 (  0.0%)
+[2026-05-06 13:51:02] [INFO] matcher —    [ 40- 60]:      0 (  0.0%)
+[2026-05-06 13:51:02] [INFO] matcher —    [ 60- 80]:     10 (  0.2%)
+[2026-05-06 13:51:02] [INFO] matcher —    [ 80-100]:    897 ( 19.8%)
+[2026-05-06 13:51:02] [INFO] matcher —    [ 90-100]:   2857 ( 63.2%)
+[2026-05-06 13:51:02] [INFO] matcher —    [100-100]:   2161 ( 47.8%)
+[2026-05-06 13:51:04] [INFO] matcher — ✅ Exportado: sem_match_civel_20260506_135004.xlsx (4519 registros)
+[2026-05-06 13:51:06] [INFO] matcher — ✅ Exportado: sem_match_civel_prioridade_20260506_135004.xlsx (3644 registros prioritários)
+[2026-05-06 13:51:06] [INFO] matcher — ✅ Exportado: agravo_interno_20260506_135004.xlsx (117 registros)
+[2026-05-06 13:51:06] [INFO] matcher — ✅ Exportado: agravo_regimental_20260506_135004.xlsx (44 registros)
+[2026-05-06 13:51:06] [INFO] matcher — ✅ Exportado: agravo_de_instrumento_20260506_135004.xlsx (299 registros)
+[2026-05-06 13:51:06] [INFO] matcher — ✅ Exportado: arresto_ou_sequestro_20260506_135004.xlsx (2 registros)
+[2026-05-06 13:51:06] [INFO] matcher — ✅ Exportado: assistência_20260506_135004.xlsx (31 registros)
+[2026-05-06 13:51:06] [INFO] matcher — ✅ Exportado: carta_precatoria_civel_20260506_135004.xlsx (33 registros)
+[2026-05-06 13:51:06] [INFO] matcher — ✅ Exportado: carta_de_sentenca_20260506_135004.xlsx (1 registros)
+[2026-05-06 13:51:06] [INFO] matcher — ✅ Exportado: chamamento_ao_processo_20260506_135004.xlsx (1 registros)
+[2026-05-06 13:51:06] [INFO] matcher — ✅ Exportado: coisa_julgada_20260506_135004.xlsx (8 registros)
+[2026-05-06 13:51:06] [INFO] matcher — ✅ Exportado: conflito_de_competência_20260506_135004.xlsx (9 registros)
+[2026-05-06 13:51:07] [INFO] matcher — ✅ Exportado: cumprimento_de_sentenca_20260506_135004.xlsx (437 registros)
+[2026-05-06 13:51:07] [INFO] matcher — ✅ Exportado: excluido_20260506_135004.xlsx (571 registros)
+[2026-05-06 13:51:07] [INFO] matcher — ✅ Exportado: embargos_20260506_135004.xlsx (10 registros)
+[2026-05-06 13:51:07] [INFO] matcher — ✅ Exportado: embargos_de_declaracao_20260506_135004.xlsx (128 registros)
+[2026-05-06 13:51:07] [INFO] matcher — ✅ Exportado: embargos_de_divergência_20260506_135004.xlsx (2 registros)
+[2026-05-06 13:51:07] [INFO] matcher — ✅ Exportado: embargos_à_execucao_20260506_135004.xlsx (23 registros)
+[2026-05-06 13:51:07] [INFO] matcher — ✅ Exportado: exibicao_de_documento_ou_coisa_20260506_135004.xlsx (1 registros)
+[2026-05-06 13:51:08] [INFO] matcher — ✅ Exportado: iac_20260506_135004.xlsx (571 registros)
+[2026-05-06 13:51:08] [INFO] matcher — ✅ Exportado: irdr_20260506_135004.xlsx (13 registros)
+[2026-05-06 13:51:08] [INFO] matcher — ✅ Exportado: impedimentosuspeicao_do_juiz_20260506_135004.xlsx (46 registros)
+[2026-05-06 13:51:08] [INFO] matcher — ✅ Exportado: impugnacao_ao_valor_da_causa_20260506_135004.xlsx (2 registros)
+[2026-05-06 13:51:08] [INFO] matcher — ✅ Exportado: incidente_de_arbitramento_20260506_135004.xlsx (12 registros)
+[2026-05-06 13:51:08] [INFO] matcher — ✅ Exportado: incompetência_relativa_20260506_135004.xlsx (2 registros)
+[2026-05-06 13:51:08] [INFO] matcher — ✅ Exportado: intervencao_de_terceiros_20260506_135004.xlsx (1 registros)
+[2026-05-06 13:51:08] [INFO] matcher — ✅ Exportado: liquidacao_de_sentenca_20260506_135004.xlsx (6 registros)
+[2026-05-06 13:51:08] [INFO] matcher — ✅ Exportado: litispendência_20260506_135004.xlsx (3 registros)
+[2026-05-06 13:51:08] [INFO] matcher — ✅ Exportado: mandado_de_seguranca_civel_20260506_135004.xlsx (41 registros)
+[2026-05-06 13:51:08] [INFO] matcher — ✅ Exportado: oposicao_20260506_135004.xlsx (11 registros)
+[2026-05-06 13:51:08] [INFO] matcher — ✅ Exportado: producao_antecipada_de_provas_20260506_135004.xlsx (4 registros)
+[2026-05-06 13:51:08] [INFO] matcher — ✅ Exportado: rpv_20260506_135004.xlsx (5 registros)
+[2026-05-06 13:51:08] [INFO] matcher — ✅ Exportado: recurso_adesivo_20260506_135004.xlsx (5 registros)
+[2026-05-06 13:51:08] [INFO] matcher — ✅ Exportado: recurso_especial_20260506_135004.xlsx (50 registros)
+[2026-05-06 13:51:08] [INFO] matcher — ✅ Exportado: recurso_extraordinario_20260506_135004.xlsx (15 registros)
+[2026-05-06 13:51:09] [INFO] matcher — ✅ Exportado: recurso_inominado_20260506_135004.xlsx (258 registros)
+[2026-05-06 13:51:09] [INFO] matcher — ✅ Exportado: recursos_20260506_135004.xlsx (231 registros)
+[2026-05-06 13:51:09] [INFO] matcher — ✅ Exportado: tutela_cautelar_antecedente_20260506_135004.xlsx (5 registros)
+[2026-05-06 13:51:09] [INFO] matcher — ✅ Exportado: tutela_provisoria_20260506_135004.xlsx (70 registros)
+[2026-05-06 13:51:10] [INFO] matcher — ⚠️  Exportado: sem_match_civel_sem_categoria_20260506_135004.xlsx (1451 registros sem categoria)
+[2026-05-06 13:51:10] [INFO] matcher — ✅ Exportado: com_match_descartados_20260506_135004.xlsx (680 registros descartados)
+[2026-05-06 13:51:13] [INFO] matcher — ✅ Resumo exportado: resumo_20260506_135004.xlsx
+[2026-05-06 13:51:13] [INFO] matcher — 🎉 PROCESSO FINALIZADO COM SUCESSO

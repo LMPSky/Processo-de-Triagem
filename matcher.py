@@ -1,10 +1,11 @@
-"""Orquestrador principal — comparação com Legal One e exportação de resultados."""
 from __future__ import annotations
 
 from pathlib import Path
 from datetime import datetime
 import re
 import pandas as pd
+from tqdm import tqdm
+
 from config import AppConfig
 from reader import read_source, read_all_external
 from number_extractor import extract_all_numbers, normalize_number
@@ -16,342 +17,383 @@ from filters import (
     add_cnj_validation,
     add_age_flag,
 )
-from categorizer import classify_text
-
+from classifiers.common import (
+    rename_output_columns,
+    truncate_text_column,
+    sanitize_sheet_name,
+    safe_filename,
+)
+from classifiers.trabalhista import classify_trabalhista_text
+from classifiers.civel import classify_civel_record
+from reporting.summary import export_summary_excel
+from logger import setup_logger, log_classification_stats, log_matching_results, log_confidence_distribution
 
 _MAX_TEXT_LENGTH = 500
 
-def _truncate_text_column(df: pd.DataFrame) -> pd.DataFrame:
-    """Trunca a coluna _texto para caber no Excel."""
-    df = df.copy()
-    if "_texto" in df.columns:
-        df["_texto"] = df["_texto"].apply(
-            lambda x: (x[:_MAX_TEXT_LENGTH] + "... [TRUNCADO]") if isinstance(x, str) and len(x) > _MAX_TEXT_LENGTH else x
-        )
-    return df
+TRTs_validos = {f"{i:02d}" for i in range(1, 25)}
 
-def _safe_filename(name: str) -> str:
-    """Converte nome da categoria em nome de arquivo seguro."""
-    safe = (
-        name
-        .lower()
-        .replace(" ", "_")
-        .replace("ã", "a")
-        .replace("á", "a")
-        .replace("é", "e")
-        .replace("í", "i")
-        .replace("ó", "o")
-        .replace("ú", "u")
-        .replace("ç", "c")
-        .replace("-", "_")
-    )
-    return re.sub(r"[^\w]", "", safe)
 
 def _build_legalone_pool(legalone_df: pd.DataFrame, extra_columns: list[str]) -> set[str]:
     pool: set[str] = set()
-
     for _, row in legalone_df.iterrows():
         cnj = str(row.get("cnj", "")).strip()
         if cnj:
             pool.update(extract_all_numbers(cnj))
             pool.add(normalize_number(cnj))
-
         for col in extra_columns:
             val = str(row.get(col, "")).strip()
             if val and val != "nan":
                 pool.update(extract_all_numbers(val))
                 pool.add(normalize_number(val))
-
     pool.discard("")
     return pool
 
+
 def _check_match(cnj_value: str, legalone_pool: set[str]) -> bool:
     numbers = extract_all_numbers(cnj_value)
-
     for num in numbers:
         if num in legalone_pool:
             return True
         if normalize_number(num) in legalone_pool:
             return True
-
     return False
 
+
+def is_trabalhista(cnj: str) -> bool:
+    m = re.match(r"^\d{7}-\d{2}\.\d{4}\.(\d)\.(\d{2})\.\d{4}$", cnj)
+    if not m:
+        return False
+    j, tt = m.group(1), m.group(2)
+    return j == "5" and tt in TRTs_validos
+
+
+def is_trabalhista_custom(row) -> bool:
+    fonte = str(row.get("_fonte") or "").strip().upper()
+    if fonte in {"STJ", "STF"}:
+        return False
+    return is_trabalhista(row.get("cnj", ""))
+
+    # ===================== ANÁLISE TRABALHISTA BRUTA =====================
+    from reporting.summary import export_trabalhista_analysis
+    
+    export_trabalhista_analysis(
+        summary_path=summary_path,
+        sem_match_trab=sem_match_trab,
+    )
+    logger.info(f"✅ Análise trabalhista adicionada ao resumo")
+
+
 def run_matching(config: AppConfig) -> None:
-    """Executa o matching completo e exporta os resultados."""
-
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    logger = setup_logger("matcher")
+    
+    logger.info("🚀 INICIANDO PROCESSO DE TRIAGEM")
 
-    # ──────────────────────────────────────────────
-    # 1. Ler a base do Legal One
-    # ──────────────────────────────────────────────
     print("═" * 60)
     print("📂 Lendo fonte: LEGAL ONE")
     legalone_df = read_source(config.legalone, config.input_dir)
-
+    logger.info(f"Legal One: {len(legalone_df)} linhas lidas")
     print(f"   → {len(legalone_df)} linhas no Legal One")
 
     extra_cols = config.legalone.extra_match_columns
     legalone_pool = _build_legalone_pool(legalone_df, extra_cols)
+    logger.info(f"Legal One: {len(legalone_pool)} identificadores no pool")
     print(f"   → {len(legalone_pool)} identificadores únicos no pool de comparação")
 
-    # ──────────────────────────────────────────────
-    # 2. Ler e juntar as 3 bases externas
-    # ──────────────────────────────────────────────
     print("\n" + "═" * 60)
     external_df = read_all_external(config)
+    logger.info(f"Bases externas: {len(external_df)} linhas lidas (antes de dedup)")
     print(f"\n   → {len(external_df)} linhas totais nas bases externas")
 
-    # ──────────────────────────────────────────────
-    # 3. Classificar tipo de número
-    # ──────────────────────────────────────────────
     print("\n" + "═" * 60)
     print("📋 Classificando tipos de número...")
     external_df = add_number_classification(external_df)
 
-    # ──────────────────────────────────────────────
-    # 4. Enriquecer com info de fontes
-    # ──────────────────────────────────────────────
     print("\n" + "═" * 60)
     print("📋 Analisando presença em múltiplas fontes...")
     external_df = enrich_with_source_info(external_df)
 
-    # ──────────────────────────────────────────────
-    # 5. Remover duplicatas
-    # ──────────────────────────────────────────────
     print("\n" + "═" * 60)
     print("📋 Removendo duplicatas...")
     external_df, duplicates_df = remove_duplicates(external_df)
+    logger.info(f"Duplicatas removidas: {len(duplicates_df)}")
 
-    # ──────────────────────────────────────────────
-    # 6. Extrair detalhes do CNJ (UF, Ramo, Ano)
-    # ──────────────────────────────────────────────
     print("\n" + "═" * 60)
     print("📋 Extraindo detalhes dos CNJs (UF, Ramo, Ano)...")
     external_df = add_cnj_details(external_df)
 
-    # ──────────────────────────────────────────────
-    # 7. Validar dígito verificador
-    # ──────────────────────────────────────────────
     print("\n" + "═" * 60)
     print("📋 Validando dígito verificador dos CNJs...")
     external_df = add_cnj_validation(external_df)
 
-    # ──────────────────────────────────────────────
-    # 8. Marcar processos antigos
-    # ──────────────────────────────────────────────
     print("\n" + "═" * 60)
     print("📋 Verificando idade dos processos...")
     external_df = add_age_flag(external_df, cutoff_year=2015)
 
-    # ──────────────────────────────────────────────
-    # 9. Comparar TODOS com Legal One
-    # ──────────────────────────────────────────────
     print("\n" + "═" * 60)
     print("🔍 Comparando com Legal One...")
-
-    external_df["match_legalone"] = external_df["cnj"].apply(
+    tqdm.pandas(desc="   🔍 Matching")
+    external_df["match_legalone"] = external_df["cnj"].progress_apply(
         lambda x: _check_match(x, legalone_pool)
     )
 
-    matched = external_df[external_df["match_legalone"]].copy()
-    unmatched = external_df[~external_df["match_legalone"]].copy()
+    sem_match = external_df[~external_df["match_legalone"]].copy()
+    com_match = external_df[external_df["match_legalone"]].copy()
 
-    print(f"   ✅ COM match (nossos):  {len(matched)} linhas")
-    print(f"   ❌ SEM match (lixo):    {len(unmatched)} linhas")
+    logger.info(f"Matching: {len(sem_match)} SEM MATCH, {len(com_match)} COM MATCH")
+    print(f"   ➡️ SEM MATCH total:  {len(sem_match)}")
+    print(f"   ➡️ COM MATCH (descartados): {len(com_match)}")
 
-    # ──────────────────────────────────────────────
-    # 10. Classificar os COM MATCH por categoria
-    # ──────────────────────────────────────────────
-    print("\n" + "═" * 60)
-    print("📋 Classificando processos COM match por categoria...")
+    sem_match["is_trabalhista"] = sem_match.apply(is_trabalhista_custom, axis=1)
+    sem_match_trab = sem_match[sem_match["is_trabalhista"]].copy()
+    sem_match_civel = sem_match[~sem_match["is_trabalhista"]].copy()
 
-    matched["_categoria"] = matched["_texto"].apply(classify_text)
+    log_matching_results(logger, len(sem_match_trab), len(sem_match_civel), len(com_match), len(external_df))
+    print(f"   ➡️ Trabalhista SEM MATCH: {len(sem_match_trab)}")
+    print(f"   ➡️ Cível SEM MATCH:      {len(sem_match_civel)}")
 
-    # Separar Décio Freire como PRIORIDADE
-    decio_df = matched[matched["_categoria"] == "Décio Freire"].copy()
-    other_categorized = matched[
-        (matched["_categoria"].notna()) & (matched["_categoria"] != "Décio Freire")
-    ].copy()
-    no_category = matched[matched["_categoria"].isna()].copy()
-
-    print(f"   ⭐ Décio Freire (PRIORIDADE): {len(decio_df)} linhas")
-    print(f"   📂 Outras categorias:         {len(other_categorized)} linhas")
-    print(f"   📄 Sem categoria:             {len(no_category)} linhas")
-
-    if len(other_categorized) > 0:
-        print(f"\n   📊 Por categoria:")
-        for cat, count in other_categorized["_categoria"].value_counts().items():
-            print(f"      • {cat}: {count}")
-
-    # ──────────────────────────────────────────────
-    # 11. Exportar resultados
-    # ──────────────────────────────────────────────
     out = Path(config.output_dir)
-    out.mkdir(parents=True, exist_ok=True)
+    trab_dir = out / "Trabalhista"
+    trab_dir.mkdir(exist_ok=True, parents=True)
+    civel_dir = out / "Civel"
+    civel_dir.mkdir(exist_ok=True, parents=True)
 
-    cols_to_drop = ["match_legalone", "_categoria"]
-
-    # --- DÉCIO FREIRE (PRIORIDADE) ---
-    decio_path = out / f"PRIORIDADE_decio_freire_{timestamp}.xlsx"
-    if len(decio_df) > 0:
-        _truncate_text_column(decio_df.drop(columns=cols_to_drop, errors="ignore")).to_excel(
-            decio_path, index=False, sheet_name="Décio Freire", engine="openpyxl"
+        # ===================== TRABALHISTA =====================
+    if not sem_match_trab.empty:
+        logger.info("📋 INICIANDO CLASSIFICAÇÃO TRABALHISTA")
+        
+        # ✅ NOVO: Exportar BRUTO (antes de categorizar)
+        trab_bruto_path = trab_dir / f"sem_match_trab_bruto_{timestamp}.xlsx"
+        trab_bruto_export = rename_output_columns(truncate_text_column(sem_match_trab.copy(), _MAX_TEXT_LENGTH))
+        trab_bruto_export.to_excel(
+            trab_bruto_path,
+            index=False,
+            sheet_name=sanitize_sheet_name("Bruto"),
+            engine="openpyxl",
         )
+        logger.info(f"✅ Exportado BRUTO: {trab_bruto_path.name} ({len(sem_match_trab)} registros)")
+        print(f"✅ Exportado BRUTO (sem filtro): {trab_bruto_path.name}")
+        
+        # ✅ Agora sim, categorizar
+        sem_match_trab["_categoria"] = sem_match_trab["_texto"].apply(classify_trabalhista_text)
+        logger.info("✅ Classificação TRABALHISTA concluída")
 
-    # --- CATEGORIAS (1 arquivo por categoria) ---
-    categories_dir = out / "categorias"
-    categories_dir.mkdir(parents=True, exist_ok=True)
+        print("\nCategorias atribuídas (value_counts) - Trabalhista:")
+        print(sem_match_trab["_categoria"].value_counts(dropna=False))
+        log_classification_stats(logger, sem_match_trab, "TRABALHISTA", "_categoria")
 
-    if len(other_categorized) > 0:
-        print(f"\n   📁 Arquivos por categoria:")
-        for category in sorted(other_categorized["_categoria"].unique()):
-            cat_df = other_categorized[other_categorized["_categoria"] == category].copy()
-
-            safe_name = _safe_filename(category)
-            file_path = categories_dir / f"{safe_name}_{timestamp}.xlsx"
-
-            _truncate_text_column(
-                cat_df.drop(columns=cols_to_drop, errors="ignore")
-            ).to_excel(
-                file_path, index=False, sheet_name=category[:31], engine="openpyxl"
+        exemplos_nao_classificados = sem_match_trab[sem_match_trab["_categoria"].isna()]
+        if len(exemplos_nao_classificados) > 0:
+            print("\nExemplos de textos trabalhistas não classificados:")
+            print(
+                exemplos_nao_classificados[["_texto"]].sample(
+                    min(10, len(exemplos_nao_classificados)), random_state=100
+                )
             )
-            print(f"      • {file_path.name}  ({len(cat_df)} linhas)")
 
-    # Consolidado de todos os categorizados
-    all_categorized = pd.concat([decio_df, other_categorized], ignore_index=True)
-    if len(all_categorized) > 0:
-        all_cat_path = categories_dir / f"todos_classificados_{timestamp}.xlsx"
-        _truncate_text_column(
-            all_categorized.drop(columns=["match_legalone"], errors="ignore")
-        ).to_excel(
-            all_cat_path, index=False, sheet_name="classificados", engine="openpyxl"
+        decio_df = sem_match_trab[sem_match_trab["_categoria"] == "Décio Freire"].copy()
+        other_categorized = sem_match_trab[
+            (sem_match_trab["_categoria"].notna()) & (sem_match_trab["_categoria"] != "Décio Freire")
+        ].copy()
+        no_category = sem_match_trab[sem_match_trab["_categoria"].isna()].copy()
+
+        trab_prioridade_path = trab_dir / f"sem_match_trab_prioridade_{timestamp}.xlsx"
+        if len(decio_df) > 0:
+            decio_export = rename_output_columns(
+                truncate_text_column(decio_df.drop(columns=["_categoria"], errors="ignore"), _MAX_TEXT_LENGTH)
+            )
+            decio_export.to_excel(
+                trab_prioridade_path,
+                index=False,
+                sheet_name=sanitize_sheet_name("PRIORIDADE"),
+                engine="openpyxl",
+            )
+            logger.info(f"✅ Exportado: {trab_prioridade_path.name} ({len(decio_df)} registros)")
+
+        trab_categorias_dir = trab_dir / "sem_match_trab_categorias"
+        trab_categorias_dir.mkdir(parents=True, exist_ok=True)
+
+        if len(other_categorized) > 0:
+            print(f"\n   📁 Arquivos TRABALHISTA por categoria:")
+            for category in sorted(other_categorized["_categoria"].unique()):
+                cat_df = other_categorized[other_categorized["_categoria"] == category].copy()
+                safe_name = safe_filename(category)
+                file_path = trab_categorias_dir / f"{safe_name}_{timestamp}.xlsx"
+                cat_export = rename_output_columns(
+                    truncate_text_column(cat_df.drop(columns=["_categoria"], errors="ignore"), _MAX_TEXT_LENGTH)
+                )
+                cat_export.to_excel(
+                    file_path,
+                    index=False,
+                    sheet_name=sanitize_sheet_name(category),
+                    engine="openpyxl",
+                )
+                logger.info(f"✅ Exportado: {file_path.name} ({len(cat_df)} registros)")
+                print(f"      • {file_path.name}  ({len(cat_df)} linhas)")
+
+        trab_todos_classificados_path = trab_categorias_dir / f"sem_match_trab_todos_classificados_{timestamp}.xlsx"
+        all_categorized = pd.concat([decio_df, other_categorized], ignore_index=True)
+        if len(all_categorized) > 0:
+            all_export = rename_output_columns(
+                truncate_text_column(all_categorized.drop(columns=["_categoria"], errors="ignore"), _MAX_TEXT_LENGTH)
+            )
+            all_export.to_excel(
+                trab_todos_classificados_path,
+                index=False,
+                sheet_name=sanitize_sheet_name("classificados"),
+                engine="openpyxl",
+            )
+            logger.info(f"✅ Exportado: {trab_todos_classificados_path.name} ({len(all_categorized)} registros)")
+
+        trab_sem_cat_path = trab_dir / f"sem_match_trab_sem_categoria_{timestamp}.xlsx"
+        if len(no_category) > 0:
+            no_cat_export = rename_output_columns(
+                truncate_text_column(no_category.drop(columns=["_categoria"], errors="ignore"), _MAX_TEXT_LENGTH)
+            )
+            no_cat_export.to_excel(
+                trab_sem_cat_path,
+                index=False,
+                sheet_name=sanitize_sheet_name("sem_categoria"),
+                engine="openpyxl",
+            )
+            logger.info(f"⚠️  Exportado: {trab_sem_cat_path.name} ({len(no_category)} registros sem categoria)")
+    else:
+        decio_df = pd.DataFrame()
+        other_categorized = pd.DataFrame()
+        no_category = pd.DataFrame()
+        trab_bruto_path = trab_dir / f"sem_match_trab_bruto_{timestamp}.xlsx"
+        trab_categorias_dir = trab_dir / "sem_match_trab_categorias"
+        trab_prioridade_path = trab_dir / f"sem_match_trab_prioridade_{timestamp}.xlsx"
+        trab_todos_classificados_path = trab_categorias_dir / f"sem_match_trab_todos_classificados_{timestamp}.xlsx"
+        trab_sem_cat_path = trab_dir / f"sem_match_trab_sem_categoria_{timestamp}.xlsx"
+        logger.info("⚠️  Nenhum processo trabalhista para classificar")
+
+    # ===================== CÍVEL =====================
+    if not sem_match_civel.empty:
+        civel_class = sem_match_civel.apply(classify_civel_record, axis=1)
+        sem_match_civel = pd.concat([sem_match_civel, civel_class], axis=1)
+        logger.info("✅ Classificação CÍVEL concluída")
+
+        print("\nCategorias atribuídas (value_counts) - Cível:")
+        print(sem_match_civel["_categoria_civel"].value_counts(dropna=False))
+        log_classification_stats(logger, sem_match_civel, "CÍVEL", "_categoria_civel")
+
+        print("\nPrioridade cível (value_counts):")
+        print(sem_match_civel["_prioridade_civel"].value_counts(dropna=False))
+
+        print("\nConfiança cível (histograma simples):")
+        print(sem_match_civel["_confidence_civel"].value_counts(dropna=False).sort_index())
+        log_confidence_distribution(logger, sem_match_civel, "_confidence_civel")
+
+        civel_path = civel_dir / f"sem_match_civel_{timestamp}.xlsx"
+        civel_export = rename_output_columns(truncate_text_column(sem_match_civel.copy(), _MAX_TEXT_LENGTH))
+        civel_export.to_excel(
+            civel_path,
+            index=False,
+            sheet_name=sanitize_sheet_name("Civeis"),
+            engine="openpyxl",
         )
-        print(f"      • {all_cat_path.name}  (consolidado: {len(all_categorized)} linhas)")
+        logger.info(f"✅ Exportado: {civel_path.name} ({len(sem_match_civel)} registros)")
+        print(f"Arquivo cível exportado: {civel_path}")
 
-    # --- COM MATCH SEM CATEGORIA (nossos, mas genéricos) ---
-    general_path = out / f"com_match_geral_{timestamp}.xlsx"
-    if len(no_category) > 0:
-        _truncate_text_column(
-            no_category.drop(columns=cols_to_drop, errors="ignore")
-        ).to_excel(
-            general_path, index=False, sheet_name="com_match_geral", engine="openpyxl"
+        civel_prio_dir = civel_dir / "prioridade"
+        civel_prio_dir.mkdir(parents=True, exist_ok=True)
+        civel_prioridade_df = sem_match_civel[sem_match_civel["_prioridade_civel"] == "PRIORIDADE"].copy()
+        civel_prioridade_path = civel_prio_dir / f"sem_match_civel_prioridade_{timestamp}.xlsx"
+        if len(civel_prioridade_df) > 0:
+            prio_export = rename_output_columns(truncate_text_column(civel_prioridade_df, _MAX_TEXT_LENGTH))
+            prio_export.to_excel(
+                civel_prioridade_path,
+                index=False,
+                sheet_name=sanitize_sheet_name("prioridade"),
+                engine="openpyxl",
+            )
+            logger.info(f"✅ Exportado: {civel_prioridade_path.name} ({len(civel_prioridade_df)} registros prioritários)")
+
+        civel_cat_dir = civel_dir / "sem_match_civel_categorias"
+        civel_cat_dir.mkdir(parents=True, exist_ok=True)
+
+        civeis_com_categoria = sem_match_civel[sem_match_civel["_categoria_civel"].notna()].copy()
+        if len(civeis_com_categoria) > 0:
+            print(f"\n   📁 Arquivos CÍVEL por categoria:")
+            for category in sorted(civeis_com_categoria["_categoria_civel"].dropna().unique()):
+                cat_df = civeis_com_categoria[civeis_com_categoria["_categoria_civel"] == category].copy()
+                safe_name = safe_filename(category)
+                file_path = civel_cat_dir / f"{safe_name}_{timestamp}.xlsx"
+                cat_export = rename_output_columns(truncate_text_column(cat_df, _MAX_TEXT_LENGTH))
+                cat_export.to_excel(
+                    file_path,
+                    index=False,
+                    sheet_name=sanitize_sheet_name(safe_name),
+                    engine="openpyxl",
+                )
+                logger.info(f"✅ Exportado: {file_path.name} ({len(cat_df)} registros)")
+                print(f"      • {file_path.name}  ({len(cat_df)} linhas)")
+
+        civel_sem_categoria = sem_match_civel[sem_match_civel["_categoria_civel"].isna()].copy()
+        civel_sem_cat_path = civel_dir / f"sem_match_civel_sem_categoria_{timestamp}.xlsx"
+        if len(civel_sem_categoria) > 0:
+            civel_sem_cat_export = rename_output_columns(
+                truncate_text_column(civel_sem_categoria, _MAX_TEXT_LENGTH)
+            )
+            civel_sem_cat_export.to_excel(
+                civel_sem_cat_path,
+                index=False,
+                sheet_name=sanitize_sheet_name("sem_categoria"),
+                engine="openpyxl",
+            )
+            logger.info(f"⚠️  Exportado: {civel_sem_cat_path.name} ({len(civel_sem_categoria)} registros sem categoria)")
+
+    else:
+        civel_path = civel_dir / f"sem_match_civel_{timestamp}.xlsx"
+        civel_cat_dir = civel_dir / "sem_match_civel_categorias"
+        civel_prio_dir = civel_dir / "prioridade"
+        civel_prioridade_path = civel_prio_dir / f"sem_match_civel_prioridade_{timestamp}.xlsx"
+        civel_sem_cat_path = civel_dir / f"sem_match_civel_sem_categoria_{timestamp}.xlsx"
+        logger.info("⚠️  Nenhum processo cível para classificar")
+
+    # ===================== COM MATCH =====================
+    com_match_path = out / f"com_match_descartados_{timestamp}.xlsx"
+    if len(com_match) > 0:
+        com_match_export = rename_output_columns(truncate_text_column(com_match.copy(), _MAX_TEXT_LENGTH))
+        com_match_export.to_excel(
+            com_match_path,
+            index=False,
+            sheet_name=sanitize_sheet_name("descartados"),
+            engine="openpyxl",
         )
+        logger.info(f"✅ Exportado: {com_match_path.name} ({len(com_match)} registros descartados)")
 
-    # --- LIXO (sem match = não está no Legal One) ---
-    lixo_path = out / f"lixo_sem_match_{timestamp}.xlsx"
-    _truncate_text_column(
-        unmatched.drop(columns=cols_to_drop, errors="ignore")
-    ).to_excel(
-        lixo_path, index=False, sheet_name="lixo", engine="openpyxl"
-    )
-
-    # --- DUPLICATAS ---
-    dup_path = out / f"duplicados_removidos_{timestamp}.xlsx"
-    if len(duplicates_df) > 0:
-        _truncate_text_column(duplicates_df).to_excel(
-            dup_path, index=False, sheet_name="duplicados", engine="openpyxl"
-        )
-
-    # --- PROCESSOS ANTIGOS ---
-    old_processes = matched[matched["processo_antigo"] == True]
-    old_path = out / f"processos_antigos_{timestamp}.xlsx"
-    if len(old_processes) > 0:
-        _truncate_text_column(
-            old_processes.drop(columns=cols_to_drop, errors="ignore")
-        ).to_excel(
-            old_path, index=False, sheet_name="antigos", engine="openpyxl"
-        )
-
-    # ──────────────────────────────────────────────
-    # 12. Relatório resumo
-    # ──────────────────────────────────────────────
+    # ===================== RESUMO =====================
     summary_path = out / f"resumo_{timestamp}.txt"
+    export_summary_excel(
+        summary_path=summary_path,
+        legalone_df=legalone_df,
+        legalone_pool=legalone_pool,
+        external_df=external_df,
+        duplicates_df=duplicates_df,
+        sem_match_trab=sem_match_trab,
+        sem_match_civel=sem_match_civel,
+        com_match=com_match,
+        decio_df=decio_df,
+        other_categorized=other_categorized,
+        no_category=no_category,
+    )
+    logger.info(f"✅ Resumo exportado: {summary_path.with_suffix('.xlsx').name}")
 
-    mask_cnj = external_df["tipo_numero"] == "cnj"
-
-    summary_lines = [
-        f"Relatório de Triagem — {datetime.now().strftime('%d/%m/%Y %H:%M')}",
-        f"{'=' * 55}",
-        f"",
-        f"LEGAL ONE",
-        f"  Linhas:                  {len(legalone_df)}",
-        f"  Identificadores no pool: {len(legalone_pool)}",
-        f"",
-        f"BASES EXTERNAS (Painel + DW + WebJur)",
-        f"  Linhas totais (antes):   {len(external_df) + len(duplicates_df)}",
-        f"  Duplicatas removidas:    {len(duplicates_df)}",
-        f"  Linhas após dedup:       {len(external_df)}",
-        f"",
-        f"MATCH COM LEGAL ONE",
-        f"  COM match (nossos):      {len(matched)} linhas",
-        f"  SEM match (lixo):        {len(unmatched)} linhas",
-        f"",
-        f"PROCESSOS NOSSOS — CLASSIFICAÇÃO",
-        f"  ⭐ Décio Freire (PRIORIDADE): {len(decio_df)}",
-    ]
-
-    if len(other_categorized) > 0:
-        for cat, count in other_categorized["_categoria"].value_counts().items():
-            summary_lines.append(f"  • {cat}: {count}")
-
-    summary_lines += [
-        f"  Sem categoria (genéricos):    {len(no_category)}",
-        f"",
-        f"DETALHES DOS CNJs (todos)",
-    ]
-
-    if mask_cnj.sum() > 0:
-        summary_lines.append(f"  Ramo da Justiça:")
-        for ramo, count in external_df.loc[mask_cnj, "ramo_justica"].value_counts().items():
-            if ramo:
-                summary_lines.append(f"    • {ramo}: {count}")
-
-        summary_lines.append(f"  UF (top 15):")
-        for uf, count in external_df.loc[mask_cnj, "uf"].value_counts().head(15).items():
-            if uf:
-                summary_lines.append(f"    • {uf}: {count}")
-
-    summary_lines += [
-        f"",
-        f"VALIDAÇÃO DE DÍGITO VERIFICADOR",
-        f"  CNJs válidos:   {external_df.loc[mask_cnj, 'cnj_valido'].sum() if mask_cnj.sum() > 0 else 0}",
-        f"  CNJs inválidos: {(mask_cnj & ~external_df['cnj_valido']).sum() if mask_cnj.sum() > 0 else 0}",
-        f"",
-        f"IDADE DOS PROCESSOS (corte: 2015)",
-        f"  Antigos (antes de 2015): {matched['processo_antigo'].sum()}",
-        f"  Recentes (2015+):        {len(matched) - matched['processo_antigo'].sum()}",
-        f"",
-        f"ARQUIVOS GERADOS",
-    ]
-
-    if len(decio_df) > 0:
-        summary_lines.append(f"  ⭐ {decio_path.name}  (PRIORIDADE)")
-    summary_lines.append(f"  {general_path.name}  (nossos sem categoria)")
-    summary_lines.append(f"  {lixo_path.name}  (lixo)")
-    if len(duplicates_df) > 0:
-        summary_lines.append(f"  {dup_path.name}")
-    if len(old_processes) > 0:
-        summary_lines.append(f"  {old_path.name}  (processos antigos nossos)")
-    summary_lines += [
-        f"  categorias/  (1 arquivo por categoria)",
-        f"  {summary_path.name}",
-    ]
-
-    summary_path.write_text("\n".join(summary_lines), encoding="utf-8")
-
-    # ──────────────────────────────────────────────
-    # 13. Print final
-    # ──────────────────────────────────────────────
     print(f"\n{'═' * 60}")
     print(f"📁 Arquivos gerados em: {out.resolve()}")
-    if len(decio_df) > 0:
-        print(f"   ⭐ {decio_path.name}  (PRIORIDADE — Décio Freire)")
-    print(f"   • {general_path.name}  (nossos sem categoria)")
-    print(f"   • {lixo_path.name}  (lixo)")
-    if len(duplicates_df) > 0:
-        print(f"   • {dup_path.name}  (duplicatas)")
-    if len(old_processes) > 0:
-        print(f"   • {old_path.name}  (processos antigos)")
-    print(f"   • categorias/  (1 arquivo por categoria)")
-    print(f"   • {summary_path.name}  (resumo)")
+    if not sem_match_trab.empty:
+        print(f"   • Prioridade (Décio Trabal): {trab_prioridade_path.name}")
+        print(f"   • Categorias TRABALHISTA -> {trab_categorias_dir}")
+        print(f"   • Todos classificados TRABALHISTA -> {trab_todos_classificados_path.name}")
+        print(f"   • Sem categoria TRABALHISTA: {trab_sem_cat_path.name}")
+    if not sem_match_civel.empty:
+        print(f"   • CÍVEL exportado: {civel_path.name}")
+        print(f"   • Categorias CÍVEL -> {civel_cat_dir}")
+        print(f"   • Prioridade CÍVEL -> {civel_prioridade_path}")
+        print(f"   • Sem categoria CÍVEL: {civel_sem_cat_path.name}")
+    print(f"   • COM MATCH descartados: {com_match_path.name}")
     print(f"{'═' * 60}")
+    
+    logger.info("🎉 PROCESSO FINALIZADO COM SUCESSO")

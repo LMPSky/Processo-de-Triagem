@@ -1,0 +1,17 @@
+Iniciando processamento...
+📂 Diretório raiz: C:\Users\lucas.paim\Desktop\processo_triage
+📂 Entrada: C:\Users\lucas.paim\Desktop\processo_triage\input
+📂 Saída: C:\Users\lucas.paim\Desktop\processo_triage\output
+📝 Log desta execução: C:\Users\lucas.paim\Desktop\processo_triage\logs_ui\ui_run_20260423_144957.log
+Limpando arquivos internos de execuções anteriores...
+Removendo arquivo interno anterior: Base LO.xlsx
+Removendo arquivo interno anterior: Webjur1.csv
+Copiando arquivos selecionados para a pasta de processamento...
+Preparando fonte 'Base Legal One' com 1 arquivo(s)...
+⚠️ Arquivo não encontrado: Base LO.xlsx
+Preparando fonte 'WebJur' com 1 arquivo(s)...
+⚠️ Arquivo não encontrado: Webjur1.csv
+ℹ️ Fonte não informada nesta execução: DW
+ℹ️ Fonte não informada nesta execução: Painel
+ℹ️ Fonte não informada nesta execução: Modo LegalOne de Intimações
+❌ Nenhum arquivo foi preparado para processamento.
